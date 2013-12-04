@@ -1,0 +1,200 @@
+body {
+	background-color: white;
+	background-image: -webkit-linear-gradient(top, rgba(239,241,242, 0)
+		50%, rgba(239,241,242, .5) 50%, rgba(239,241,242, .5) 100%),
+		-webkit-linear-gradient(left, rgba(239,241,242, 0) 50%,
+		rgba(239,241,242, .5) 50%, rgba(239,241,242, .5) 100%);
+	-webkit-background-size: 88px 88px;
+	-moz-background-size: 88px 88px;
+	background-size: 88px 88px;
+}
+
+.login-panel {
+	width: 100%;
+	height: 600px;
+	padding: 20px;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	-moz-box-pack: center;
+	-moz-box-align: center;
+	display: -o-box;
+	-o-box-orient: horizontal;
+	-o-box-pack: center;
+	-o-box-align: center;
+	display: -ms-box;
+	-ms-box-orient: horizontal;
+	-ms-box-pack: center;
+	-ms-box-align: center;
+	display: box;
+	box-orient: horizontal;
+	box-pack: center;
+	box-align: center;
+}
+
+.login-form {
+	font-family: "Microsoft Yahei";
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 老的 Firefox */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	width: 470px;
+	padding: 20px;
+	background: #fff;
+}
+
+.login-form .form-head {
+	display: inline-block;
+	font-weight: bold;
+	padding-top:5px;
+}
+
+.login-form .form-head .title {
+	font-size: 20px;
+}
+.form-head .credits-icon{
+	background-image:url(../images/favicon.png);
+	width:32px;
+	height:32px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.login-form .form-head .sub-title {
+	font-size: 14px;
+	color: #888;
+	padding-left:32px;
+}
+
+.login-form .fields {
+	border-radius: 6px;
+	background-color: rgba(40, 40, 40, 0.04);
+	padding: 15px;
+	margin-top: 20px;
+}
+
+.login-form .field-part:first-child {
+	margin-top: 0
+}
+
+.login-form .field-part {
+	margin-top: 20px;
+}
+.login-form .field-part .checkbox-inline {
+	height: 20px;
+	padding-right: 10px;
+}
+
+.login-form .field-part .name {
+	width: 140px;
+	display: inline-block;
+	font-weight: bold;
+	padding-left: 10px;
+	vertical-align: middle;
+}
+
+.login-form .field-part .field {
+	border: 5px solid rgba(30, 30, 30, 0.06);
+	display: inline-block;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+.login-form .field-part .field .input-group {
+	width: 100px;
+}
+
+.login-form .field-part .field .input-group input {
+	width: 200px;
+	display: inline-block;
+	border-radius: 0;
+}
+.login-form .field-part .field .input-group input.code{
+	width:148px;
+}
+
+.login-form .field-part .field .input-group span {
+	border-radius: 0
+}
+img.volidecode{
+	max-height:30px;
+}
+
+.login-form .form-footer {
+	padding-top: 20px;
+	text-align: right;
+}
+
+.form-footer .response-text {
+	min-width: 200px;
+	height: 24px;
+	display: inline-block;
+	color:#990000;
+	padding-right:10px;
+}
+
+.login-btn {
+	width: 100px;
+	display: inline-block;
+	background-color: #ee432e;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee432e),
+		color-stop(50%, #c63929), color-stop(50%, #b51700),
+		color-stop(100%, #891100));
+	background-image: -webkit-linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%,
+		#891100 100%);
+	background-image: -moz-linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%, #891100
+		100%);
+	background-image: -ms-linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%, #891100
+		100%);
+	background-image: -o-linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%, #891100
+		100%);
+	background-image: linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%, #891100 100%);
+	border: 1px solid #951100;
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 0 0 1px rgba(255, 115, 100, 0.4), 0 1px 3px
+		#333333;
+	box-shadow: inset 0 0 0 1px rgba(255, 115, 100, 0.4), 0 1px 3px #333333;
+	color: #fff;
+	font: bold 18px/1 "Microsoft Yahei", "helvetica neue", helvetica, arial,
+		sans-serif;
+	padding: 8px 0 10px 0;
+	text-align: center;
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.8);
+}
+
+.login-btn:hover {
+	background-color: #f37873;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f37873),
+		color-stop(50%, #db504d), color-stop(50%, #cb0500),
+		color-stop(100%, #a20601));
+	background-image: -webkit-linear-gradient(top, #f37873 0%, #db504d 50%, #cb0500 50%,
+		#a20601 100%);
+	background-image: -moz-linear-gradient(top, #f37873 0%, #db504d 50%, #cb0500 50%, #a20601
+		100%);
+	background-image: -ms-linear-gradient(top, #f37873 0%, #db504d 50%, #cb0500 50%, #a20601
+		100%);
+	background-image: -o-linear-gradient(top, #f37873 0%, #db504d 50%, #cb0500 50%, #a20601
+		100%);
+	background-image: linear-gradient(top, #f37873 0%, #db504d 50%, #cb0500 50%, #a20601 100%);
+	cursor: pointer;
+}
+
+.login-btn:active {
+	background-color: #d43c28;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d43c28),
+		color-stop(50%, #ad3224), color-stop(50%, #9c1500),
+		color-stop(100%, #700d00));
+	background-image: -webkit-linear-gradient(top, #d43c28 0%, #ad3224 50%, #9c1500 50%,
+		#700d00 100%);
+	background-image: -moz-linear-gradient(top, #d43c28 0%, #ad3224 50%, #9c1500 50%, #700d00
+		100%);
+	background-image: -ms-linear-gradient(top, #d43c28 0%, #ad3224 50%, #9c1500 50%, #700d00
+		100%);
+	background-image: -o-linear-gradient(top, #d43c28 0%, #ad3224 50%, #9c1500 50%, #700d00
+		100%);
+	background-image: linear-gradient(top, #d43c28 0%, #ad3224 50%, #9c1500 50%, #700d00 100%);
+	-webkit-box-shadow: inset 0 0 0 1px rgba(255, 115, 100, 0.4);
+	box-shadow: inset 0 0 0 1px rgba(255, 115, 100, 0.4);
+}

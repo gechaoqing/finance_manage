@@ -1,0 +1,65 @@
+#{extends 'main.html' /}
+#{set title:'财险日常管理' /}
+<link rel="stylesheet" media="screen"
+	href="@{'/public/stylesheets/index.css'}">
+<div class='login-panel'>
+	<div class='login-form'>
+		<div class='form-head'>
+			<div class='title'><span class='credits-icon'></span> 财险日常管理</div>
+			<div class='sub-title'>&nbsp;&nbsp;管理员登录</div>
+		</div>
+		<div class='fields'>
+		<form class="form-signin" action="validate.xhtml" method="post">
+			<div class='field-part'>
+				<span class='name'>管理员账户</span>
+				<div class='field'>
+					<div class="input-group">
+						<span class="input-group-addon"><i
+							class='glyphicon glyphicon-user'></i></span> <input type="text"
+							class="form-control" name="account" value="${account}" placeholder="">
+					</div>
+				</div>
+			</div>
+			<div class='field-part'>
+				<span class='name'>管理员密码</span>
+				<div class='field'>
+					<div class="input-group">
+						<span class="input-group-addon"><i
+							class='glyphicon glyphicon-lock'></i></span> <input type="password"
+							class="form-control" name="pass" value="${pwd}" placeholder="">
+					</div>
+				</div>
+			</div>
+			<div class='field-part'>
+				<span class='name'>验证码</span>
+				<div class='field'>
+					<div class="input-group">
+					<input type="text"
+							class="form-control code" name="code" value="" placeholder="">
+							<span class='input-group-addon' style="padding:0">
+							<img class='volidecode' src="verifyCode?id=${randomID}">
+							</span>
+					</div>
+				</div>
+			</div>
+			<div class='field-part' style="text-align: right;">
+				<div class="checkbox-inline">
+					<label> <input type="checkbox" name="rememberme" value="1" ${pwd==null? '':'checked'} > 记住密码？
+					</label>
+				</div>
+			</div>
+			<input type="hidden" name="randomID" value="${randomID}">
+			</form>
+		</div>
+		<div class='form-footer'>
+		  <span class='response-text'>${msg!=null?msg:''}</span>
+		  <span class='login-btn'>登 录</span>
+		</div>
+		
+	</div>
+	
+</div>
+<div class='body-footer'>
+  <div class='copyright'> copyright &copy; Gechaoqing 2013</div>
+</div>
+<script src="@{'/public/javascripts/index.js'}" type="text/javascript"></script>
