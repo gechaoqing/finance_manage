@@ -12,6 +12,7 @@ import play.db.jpa.GenericModel;
 @Entity
 @Table(name="t_card")
 public class BankCard extends GenericModel {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	@Column(name="card_id")

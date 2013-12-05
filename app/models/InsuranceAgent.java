@@ -10,6 +10,7 @@ import play.db.jpa.GenericModel;
 @Entity
 @Table(name="t_insurance_agent")
 public class InsuranceAgent extends GenericModel {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	@Column(name="agent_id")

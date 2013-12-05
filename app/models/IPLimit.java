@@ -10,6 +10,7 @@ import play.db.jpa.GenericModel;
 @Entity
 @Table(name="t_ip_limit")
 public class IPLimit extends GenericModel {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	@Column(name="ip_id")
