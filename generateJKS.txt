@@ -1,1 +1,2 @@
 keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks -storepass password -validity 360 -keysize 2048
+keytool -genkey -keyalg RSA -alias financeManagesigned -keystore certificate.jks -keypass geroup -storepass geroup -validity 360 -keysize 2048
