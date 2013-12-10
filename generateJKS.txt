@@ -1,2 +1,2 @@
 keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks -storepass password -validity 360 -keysize 2048
-keytool -genkey -keyalg RSA -alias financeManagesigned -keystore certificate.jks -keypass geroup -storepass geroup -validity 360 -keysize 2048
+keytool -genkey -alias tientest -keypass 1qazxsw2 -keystore tien_KeyStore1.jks -storepass 1qazxsw2 -keyalg RSA -dname "CN=BIDC, OU=TEST, O=TEST0, L=DFW, ST=TX, C=US" -validity 3650
