@@ -92,11 +92,10 @@ public class Application extends Controller {
 				Manage.index(m);
 			}else{
 				msg="用户名或密码错误!";
-				render("Application/index.html",msg);
+				index(msg);
 			}
-			
 		} else {
-			render("Application/index.html", msg);
+			index(msg);
 		}
 	}
 
