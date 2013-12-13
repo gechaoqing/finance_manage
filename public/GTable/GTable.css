@@ -1,0 +1,40 @@
+table{
+	cursor: default;
+	-moz-user-select: none; /*火狐*/
+   -webkit-user-select: none;  /*webkit浏览器*/
+   -ms-user-select: none;   /*IE10*/
+   -khtml-user-select: none; /*早期浏览器*/
+   user-select: none;
+   border:1px solid #ccc;
+}
+table tbody{
+	height:50px;
+	overflow: auto;
+}
+tr th{
+	border-right:1px solid #ddd;
+	padding:5px;
+}
+.no-border-right,tr th:last-child,tr td:last-child{
+	border-right:none;
+}
+tr td{
+	border-top:1px solid #ddd;
+	border-right:1px solid #ddd;
+	padding:5px;
+}
+tr.row-selected{
+	background-color:#ccc;
+}
+tr.e-row{
+	background-color:#eee;
+}
+td.td-focus{
+	outline:2px solid #999;
+}
+input.cellEdit{
+	position:absolute;
+	z-index: 2;
+	border:2px solid #999;
+	outline:none;
+}
