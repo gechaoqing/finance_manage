@@ -1,4 +1,4 @@
-table{
+table.GTable{
 	cursor: default;
 	-moz-user-select: none; /*火狐*/
    -webkit-user-select: none;  /*webkit浏览器*/
@@ -6,35 +6,39 @@ table{
    -khtml-user-select: none; /*早期浏览器*/
    user-select: none;
    border:1px solid #ccc;
+   font-size:14px;
+   font-family: "Microsoft Yahei";
+   width:100%;
 }
-table tbody{
-	height:50px;
-	overflow: auto;
-}
-tr th{
+table.GTable tr th{
 	border-right:1px solid #ddd;
 	padding:5px;
 }
-.no-border-right,tr th:last-child,tr td:last-child{
+.no-border-right,table.GTable tr th:last-child,table.GTable tr td:last-child{
 	border-right:none;
 }
-tr td{
+table.GTable tr td{
 	border-top:1px solid #ddd;
 	border-right:1px solid #ddd;
 	padding:5px;
+	overflow: hidden;
+	display: inline-block;
 }
-tr.row-selected{
+table.GTable tr.row-selected{
 	background-color:#ccc;
 }
-tr.e-row{
+table.GTable tr.e-row{
 	background-color:#eee;
 }
-td.td-focus{
-	outline:2px solid #999;
+table.GTable td.td-focus{
+	outline:2px solid #1883A3;
 }
 input.cellEdit{
 	position:absolute;
 	z-index: 2;
-	border:2px solid #999;
+	border:2px solid #1CBCED;
 	outline:none;
+	box-shadow:inset 1px 1px 2px #666;
+	font-size:14px;
+	font-family: "Microsoft Yahei";
 }
