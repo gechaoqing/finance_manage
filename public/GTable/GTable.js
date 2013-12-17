@@ -7,13 +7,21 @@
 		},
 		build : build
 	}
+	function loadcss(){
+		$("<link>").attr({ rel: "stylesheet",
+	        type: "text/css",
+	        href: "GTable.css"
+	    }).insertAfter("title");
+	}
 	function build(opt) {
+		loadcss();
 		var options = $.extend(GTable.options, opt);
 		var rows = options.dataset, cols = options.cols
 		$(options.container).css("overflow","auto");
 		var tableDom = buildDom(rows, cols);
 		tableDom.appendTo($(options.container));
-		setFixedThead(tableDom,options.container);
+		setCellWidth(tableDom);
+		//setFixedThead(tableDom,options.container);
 		$(document).keydown(function(e) {
 			console.log(e.which);
 			var code = e.which;
@@ -22,19 +30,36 @@
 				moveFocus(tableDom, cols, rows);
 			} else if (code === 13) {
 				e.preventDefault();
-				var input_ = $("input.cellEdit");
-				if (input_.length == 0) {
+				var input_ = $("input.cellEdit.text");
+				var input_s = $("select.cellEdit.select");
+				if (input_.length == 0||input_s.length==0) {
 					var td = tableDom.find("td.td-focus");
 					var td_col = parseInt(td.attr("col"));
+					var td_row = parseInt(td.attr("row"));
 					var editor_ = cols[(td_col - 1)].editor;
-					editor(editor_.type, td, td);
+					editor(editor_, td,eval("rows["+(td_row-1)+"]."+cols[(td_col-1)].field));
 				} else {
-					input_.blur();
+					input_.trigger("enter");
+					input_s.blur();
 				}
 			} else if (code >= 37 && code <= 40) {
 				e.preventDefault();
 				moveFocus(tableDom, cols, rows, code);
 			}
+		});
+		return tableDom;
+	}
+	function setCellWidth(tableDom){
+		var thead_o=tableDom.find("thead");
+		var o_th=thead_o.find("th");
+		o_th.each(function(i){
+			if(i==o_th.length-1){
+				thead_o.find("th[data-field="+$(this).attr("data-field")+"]").width($(this).width()+16);
+			}
+			else{
+				thead_o.find("th[data-field="+$(this).attr("data-field")+"]").width($(this).width());
+			}
+			tableDom.find("td[data-field="+$(this).attr("data-field")+"]").width($(this).width());
 		});
 	}
 	function setFixedThead(tableDom,container){
@@ -66,9 +91,13 @@
 	}
 	function moveFocus(table, cols, rows, code) {
 		var td = table.find("td.td-focus");
-		var input_ = $("input.cellEdit");
+		var input_ = $("input.cellEdit.text");
+		var input_s = $("select.cellEdit.select");
 		if (input_.length > 0) {
 			input_.blur();
+		}
+		if(input_s.length>0){
+			input_s.blur();
 		}
 		if (td.length !== 0) {
 			var next = {};
@@ -146,7 +175,7 @@
 		}
 	}
 	function buildDom(rows, cols) {
-		var table_ = table();
+		var table_ = table().attr("data-resizable-columns-id","GTable");
 		var thead_ = thead();
 		var tr_ = row().appendTo(thead_);
 		setCols(tr_, cols);
@@ -157,16 +186,28 @@
 				rowSet.addClass("e-row");
 			}
 			for ( var j = 0; j < cols.length; j++) {
-				var editor_ = cols[j].editor;
 				var col_data = eval("rows[i]." + cols[j].field);
+				if(cols[j].editor&&cols[j].editor.type==="select"){
+					var select_data=cols[j].editor.data;
+					sedata:for ( var si=0;si<select_data.length;si++) {
+						if(col_data==eval("select_data[si]."+cols[j].editor.valueField)){
+							col_data=eval("select_data[si]."+cols[j].editor.labelField);
+							break sedata;
+						}
+					}
+				}
 				if (col_data) {
 					var col_ = col(col_data).attr("data-field", cols[j].field)
 							.attr("row", i + 1).attr("col", j + 1)
 							.click(function(e) {
-								if (editor_ && editor_.type) {
+								var col_num=parseInt($(this).attr("col"));
+								var editor_ = cols[col_num-1].editor;
+								if (editor_&&editor_.type) {
+									var row_num = parseInt($(this).attr("row"));
+									var cell_data=eval("rows["+(row_num-1)+"]." + cols[col_num-1].field);
 									if ($(this).hasClass("td-focus")) {
-										editor(editor_.type, $(this));
-										$(this).removeClass("td-focus");
+										editor(editor_,$(this),cell_data);
+//										$(this).removeClass("td-focus");
 										return;
 									}
 								}
@@ -185,29 +226,62 @@
 		}
 		return table_.append(thead_).append(tbody_).attr("cellspacing", 0);
 	}
-	function editor(editor_, _this) {
+	function editor(editor_, _this,cell_data) {
 		if ($("input.cellEdit").length == 0) {
-			if (editor_ === "text") {
-				editorText(_this);
+			if (editor_.type === "text") {
+				editorText(_this,cell_data);
+			}else if(editor_.type==="select"){
+				editorSelect(_this,editor_,cell_data);
 			}
 		}
 	}
-	function editorText(_this) {
-		$("<input type='text'/>").addClass("cellEdit").css({
+	function editorSelect(_this,editor_,cell_data){
+		var select=$("<select></select>").addClass("cellEdit").addClass("select").css({"top" : _this.offset().top - 2,
+			"left" : _this.offset().left - 2,
+			"width" : _this.outerWidth() + 3,
+			"height" : _this.outerHeight() + 3,
+			"padding-left" : 5
+		});
+		var options=editor_.data;
+		var label=editor_.labelField;
+		var value=editor_.valueField;
+		for(var i=0;i<options.length;i++){
+			var opt=options[i];
+			var val=eval("opt."+value);
+			var lab=eval("opt."+label);
+			if(_this.text()==lab){
+				select.append("<option selected value='"+val+"'>"+lab+"</option>");
+				continue;
+			}
+			select.append("<option value='"+val+"'>"+lab+"</option>");
+		}
+		return select.appendTo("body").focus().click().blur(function(){
+			$(this).remove();
+		}).change(function(){
+			_this.html($(this).find(":selected").text());
+		});
+		
+	}
+	function editorText(_this,cell_data) {
+		return $("<input type='text'/>").addClass("cellEdit").addClass("text").css({
 			"top" : _this.offset().top - 2,
 			"left" : _this.offset().left - 2,
-			"width" : _this.outerWidth() + 4,
-			"height" : _this.outerHeight() + 4,
+			"width" : _this.outerWidth() + 3,
+			"height" : _this.outerHeight() + 3,
 			"padding-left" : 5
-		}).val(_this.text()).appendTo("body").focus().blur(function() {
-			_this.html($(this).val());
+		}).val(cell_data).appendTo("body").focus().blur(function() {
+//			_this.html($(this).val());
+			cell_data=$(this).val();
 			$(this).remove();
+		}).bind("enter",function(){
+			_this.html($(this).val());
+			$(this).blur();
 		});
 	}
 	function setCols(tr, cols) {
 		for ( var i = 0; i < cols.length; i++) {
 			var h = th(cols[i].title).appendTo(tr).attr("data-field",
-					cols[i].field);
+					cols[i].field).attr("data-resizable-column-id",cols[i].field);
 			if (i == cols.length - 1) {
 				h.addClass("no-border-right");
 			}
@@ -229,7 +303,7 @@
 		return $("<td></td>").html(html);
 	}
 	function th(html) {
-		return $("<th scope='col'></th>").html(html);
+		return $("<th></th>").html(html);
 	}
 	function div(html){
 		return $("<div></div>").html(html?html:"");

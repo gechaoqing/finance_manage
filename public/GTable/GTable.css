@@ -1,3 +1,10 @@
+.resize_line{  
+    width:0px;  
+    border-style: solid;  
+    border-color: #0066FF;  
+    border-width: 0 1px 0 1px;  
+    position:absolute;  
+}
 table.GTable{
 	cursor: default;
 	-moz-user-select: none; /*火狐*/
@@ -8,7 +15,6 @@ table.GTable{
    border:1px solid #ccc;
    font-size:14px;
    font-family: "Microsoft Yahei";
-   width:100%;
 }
 table.GTable tr th{
 	border-right:1px solid #ddd;
@@ -22,7 +28,6 @@ table.GTable tr td{
 	border-right:1px solid #ddd;
 	padding:5px;
 	overflow: hidden;
-	display: inline-block;
 }
 table.GTable tr.row-selected{
 	background-color:#ccc;
@@ -31,12 +36,12 @@ table.GTable tr.e-row{
 	background-color:#eee;
 }
 table.GTable td.td-focus{
-	outline:2px solid #1883A3;
+	outline:1px solid #1883A3;
 }
-input.cellEdit{
+.cellEdit{
 	position:absolute;
 	z-index: 2;
-	border:2px solid #1CBCED;
+	border:1px solid #1CBCED;
 	outline:none;
 	box-shadow:inset 1px 1px 2px #666;
 	font-size:14px;
