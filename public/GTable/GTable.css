@@ -1,7 +1,8 @@
 .resize_line{  
     width:0px;  
     border-style: solid;  
-    border-color: #0066FF;  
+    border-left-color: #ccc;
+    border-right-color:#aaa;  
     border-width: 0 1px 0 1px;  
     position:absolute;  
 }
@@ -15,19 +16,32 @@ table.GTable{
    border:1px solid #ccc;
    font-size:14px;
    font-family: "Microsoft Yahei";
+   table-layout:fixed;
+   word-break:break-all; 
+   word-wrap:break-word;
+   margin:10px;
 }
 table.GTable tr th{
 	border-right:1px solid #ddd;
 	padding:5px;
+	min-width:100px;
+}
+table.GTable thead tr{
+	background:#EeecCC;
 }
 .no-border-right,table.GTable tr th:last-child,table.GTable tr td:last-child{
 	border-right:none;
 }
+
 table.GTable tr td{
 	border-top:1px solid #ddd;
 	border-right:1px solid #ddd;
 	padding:5px;
-	overflow: hidden;
+	white-space: nowrap;
+    overflow: hidden;             
+    -o-text-overflow: ellipsis;
+    text-overflow:    ellipsis;
+    max-width:100px; 
 }
 table.GTable tr.row-selected{
 	background-color:#ccc;
@@ -35,8 +49,13 @@ table.GTable tr.row-selected{
 table.GTable tr.e-row{
 	background-color:#eee;
 }
-table.GTable td.td-focus{
+table.GTable tbody tr.hover_row{
+	background:rgba(213,237,204,0.5);
+}
+
+table.GTable tbody td.td-focus{
 	outline:1px solid #1883A3;
+	background:rgba(60,207,240,0.3);
 }
 .cellEdit{
 	position:absolute;

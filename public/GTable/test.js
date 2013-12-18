@@ -11,7 +11,7 @@ var data = [ {
 }, {
 	id : "03",
 	name : "01",
-	tel : "18845612",
+	tel : "18845612009908 09887974872847 237492sdfsdfs32f156w4ef654wef654sdf1s323793215679865e45454sd56f4s65f489wef4sdf564s56f6f654564sdf6efbf4bh3d498w8fw6f4s64f51q4wfe654f9bg8d79g7df4",
 	bir : "2013-12-3"
 }, {
 	id : "04",
@@ -37,7 +37,7 @@ var data = [ {
 	id : "06",
 	name : "03",
 	tel : "5444844",
-	bir : "2013-12-3"
+	bir : "2013123"
 }, {
 	id : "06",
 	name : "01",
@@ -86,7 +86,10 @@ var cols = [ {
 }, {
 	title : "生日",
 	type : "text",
-	field : "bir"
+	field : "bir",
+	editor:{
+		type:"date"
+	}
 } ];
 $(function() {
 	GTable.build({
@@ -94,46 +97,4 @@ $(function() {
 		dataset : data,
 		container : ".table-container"
 	});
-	//监听标题行的mouosemove事件  
-    $("table th").mousemove(function(e){  
-        var target = $(e.target);  
-        if(resizing){  
-            //当已经在拖动变化列宽时  
-            onDraging(e);  
-        }else if(fnIsLeftEdge(e)){  
-            //靠近左边框时，将当前的处理header  
-                        //设置为左边的一个，这样就相当于是拖动列  
-            //的右边框，可以只计算该header的右边框参  
-                        //考线的移动,方便处理  
-            resizeHeader = target.prev();  
-            //不响应第一列的左边框拖动事件  
-            if(resizeHeader.length == 0)  
-                return;  
-            //当鼠标停在左边框时，设置当前为可拖动状态  
-            resizable = true;             
-            //设置鼠标样式为拖动时的样式  
-            target.css("cursor", "col-resize");  
-        }else if(fnIsRightEdge(e)){  
-            //当鼠标停留在右边框时  
-            resizeHeader = target;  
-            resizable = true;  
-            target.css("cursor", "col-resize");   
-        }else{  
-            //超出可拖动的区域，设为不可拖动状态  
-            resizable = false;  
-            target.css("cursor", "default");  
-        }  
-    });  
-    //当在拖动列上点击鼠标  
-    $("table th").mousedown(function(e){  
-        onDragingStart(e);        
-    });  
-    //当在document上移动鼠标,因为拖动可能超出表格的范围  
-    $(document).mousemove(function(e){  
-        onDraging(e);  
-    });  
-    //当拖动而释放时候未在标题行的释放也需要结束拖动  
-    $(document).mouseup(function(e){  
-        onDragingEnd(e);  
-    });  
 });
