@@ -3,14 +3,14 @@
 		this.resizing = false;
 		this.resizable = false;
 		this.minWidth = 100;
-		this.table=null;
+		this.table = null;
 		this.resizeHeader = null;
 		this.leftLine = null;
 		this.rightLine = null;
 	}
 	colResizer.prototype.bindMove = function(table) {
 		var _this = this;
-		this.table=table;
+		this.table = table;
 		var th = table.find("thead th");
 		th.mousemove(function(e) {
 			var target = $(e.target);
@@ -134,10 +134,12 @@
 		var newWidth = parseInt(this.rightLine.css("left"), 10)
 				- this.resizeHeader.offset().left - this.resizeHeader.width();
 		// 设置新列宽
-		var newThWidth=this.resizeHeader.width() + newWidth;
+		var newThWidth = this.resizeHeader.width() + newWidth;
 		this.resizeHeader.width(newThWidth);
-		this.table.find("td[data-field="+this.resizeHeader.attr("data-field")+"]").width(newThWidth);
-//		this.table.width(this.table.width()+newWidth);
+		this.table.find(
+				"td[data-field=" + this.resizeHeader.attr("data-field") + "]")
+				.width(newThWidth);
+		// this.table.width(this.table.width()+newWidth);
 	}
 
 	var GTable = window.GTable = {
@@ -176,17 +178,18 @@
 						e.preventDefault();
 						var input_ = $("input.cellEdit.text");
 						var input_s = $("select.cellEdit.select");
-						var input_d=$("input.cellEdit.date");
-						if (input_.length == 0 && input_s.length == 0&&input_d.length==0) {
+						var input_d = $("input.cellEdit.date");
+						if (input_.length == 0 && input_s.length == 0
+								&& input_d.length == 0) {
 							var td = tableDom.find("td.td-focus");
 							var td_col = parseInt(td.attr("col"));
 							var td_row = parseInt(td.attr("row"));
 							var editor_ = cols[(td_col - 1)].editor;
 							editor(editor_, td, eval("rows[" + (td_row - 1)
 									+ "]." + cols[(td_col - 1)].field));
-						} else if(input_.length!=0){
+						} else if (input_.length != 0) {
 							input_.trigger("evtEnter");
-						} else if(input_s.length!=0){
+						} else if (input_s.length != 0) {
 							input_s.blur();
 						}
 					} else if (code >= 37 && code <= 40) {
@@ -394,9 +397,9 @@
 					alert("can not find " + cols[j].field + " field in row");
 				}
 			}
-			rowSet.appendTo(tbody_).hover(function(){
+			rowSet.appendTo(tbody_).hover(function() {
 				$(this).addClass("hover_row");
-			},function(){
+			}, function() {
 				$(this).removeClass("hover_row");
 			});
 		}
@@ -408,8 +411,8 @@
 				editorText(_this, cell_data);
 			} else if (editor_.type === "select") {
 				editorSelect(_this, editor_, cell_data);
-			} else if(editor_.type==="date"){
-				editorDate(_this,cell_data);
+			} else if (editor_.type === "date") {
+				editorDate(_this, cell_data);
 			}
 		}
 	}
@@ -459,35 +462,35 @@
 					$(this).blur();
 				});
 	}
-	function editorDate(_this,cell_data){
-		$("<input type='text' readonly='readonly'/>").addClass("cellEdit").addClass("date")
-		.css({
-			"top" : _this.offset().top - 2,
-			"left" : _this.offset().left - 2,
-			"width" : _this.outerWidth() + 3,
-			"height" : _this.outerHeight() + 3,
-			"padding-left" : 5
-		}).val(_this.text()).appendTo("body").focus(function(){
-			$(this).datetimepicker({
-				language : 'zh-CN',
-				format:"yyyy-mm-dd",
-				weekStart : 1,
-				todayBtn : 1,
-				autoclose : 1,
-				todayHighlight : 1,
-				startView : 2,
-				minView : 2,
-				forceParse : 1,
-				initialDate: _this.text()
-			});
-			$(this).datetimepicker("show");
-		}).focus().click(function(){
-			$(this).datetimepicker("show");
-		}).change(function(){
-			_this.html($(this).val());
-			$(this).remove();
-			$(".datetimepicker").remove();
-		});
+	function editorDate(_this, cell_data) {
+		$("<input type='text' readonly='readonly'/>").addClass("cellEdit")
+				.addClass("date").css({
+					"top" : _this.offset().top - 2,
+					"left" : _this.offset().left - 2,
+					"width" : _this.outerWidth() + 3,
+					"height" : _this.outerHeight() + 3,
+					"padding-left" : 5
+				}).val(_this.text()).appendTo("body").focus(function() {
+					$(this).datetimepicker({
+						language : 'zh-CN',
+						format : "yyyy-mm-dd",
+						weekStart : 1,
+						todayBtn : 1,
+						autoclose : 1,
+						todayHighlight : 1,
+						startView : 2,
+						minView : 2,
+						forceParse : 1,
+						initialDate : _this.text()
+					});
+					$(this).datetimepicker("show");
+				}).focus().click(function() {
+					$(this).datetimepicker("show");
+				}).change(function() {
+					_this.html($(this).val());
+					$(this).remove();
+					$(".datetimepicker").remove();
+				});
 	}
 	function setCols(tr, cols) {
 		for ( var i = 0; i < cols.length; i++) {
