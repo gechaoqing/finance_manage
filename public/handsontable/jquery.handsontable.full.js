@@ -13536,7 +13536,7 @@ if (!Array.prototype.filter) {
                 (b === 3) ? 'rd' : 'th';
         },
         currency: {
-            symbol: '$'
+            symbol: '¥'//'$'
         }
     });
 

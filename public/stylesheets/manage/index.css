@@ -1,15 +1,63 @@
-#index ul li{
-	font-size:16px;
+#index ul li {
+	font-size: 16px;
 	letter-spacing: 2px;
 }
 
-#index ul li a{
+#index ul li a {
 	text-decoration: none;
 	vertical-align: middle;
 	display: inline-block;
 }
-#index ul li a i{
-	font-size:18px;
-	vertical-align:text-top;
+
+#index ul li a i {
+	font-size: 18px;
+	vertical-align: text-top;
 	font-weight: normal;
+}
+
+.search-box {
+	width: 100%;
+	height: 35px;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#eee), to(#ddd));
+	background: -moz-linear-gradient(top, #eee, #ddd);
+	color:#000;
+	padding:0 10px;
+	line-height: 35px;
+	font-size:12px;
+}
+.search-box input{
+	width:100px;
+	display: inline-block;
+	height:25px;
+	padding-left:5px;
+}
+.search-box select.form-control{
+	display: inline-block;
+	width:100px;
+	height:25px;
+	padding:0;
+	padding-left:5px;
+}
+.search-box .button{
+	height:25px;
+	line-height: 25px;
+	padding:0 12px;
+	cursor: pointer;
+	font-family: "Microsoft Yahei";
+	-moz-user-select: none; /*火狐*/
+   -webkit-user-select: none;  /*webkit浏览器*/
+   -ms-user-select: none;   /*IE10*/
+   -khtml-user-select: none; /*早期浏览器*/
+   user-select: none;
+}
+.handsontableInputHolder .handsontableInput{
+	font-family: "Microsoft Yahei";
+	font-size:12px;
+}
+.main .wtHolder{
+	font-size:12px;
+	color:#000
+}
+.main .currentRow{
+	background-color: rgba(231, 232, 239,0.3);
 }

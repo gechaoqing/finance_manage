@@ -2,6 +2,9 @@ package controllers;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import models.InsuranceAgent;
 import models.Managers;
 import models.MonadPrintRecord;
@@ -18,9 +21,15 @@ public class Manage extends Controller {
 		render();
 	}
 	
-	public static void getPrintRecords(){
+	public static void getPrintRecords(String date,String client,String operator){
+		if(date!=null||client!=null||operator!=null){
+			
+		}
 		List<MonadPrintRecord> list=MonadPrintRecord.findAll();
-		renderJSON(list);
+		Gson gson = new GsonBuilder()
+				.serializeNulls().setDateFormat("yyyy-MM-dd")
+				.create();
+		renderJSON(gson.toJson(list));
 	}
 	
 	public static void getAgents(){

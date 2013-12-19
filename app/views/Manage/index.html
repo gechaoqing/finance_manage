@@ -2,11 +2,10 @@
 #{set title:'财险日常管理' /}
 <link rel="stylesheet" href="@{'/public/stylesheets/manage/index.css'}">
 <link rel="stylesheet" href="@{'/public/bootstrap/navigation/css/styles.css'}">
-<link rel="stylesheet" href="@{'/public/bootstrap/css/font-awesome.min.css'}">
 <script src="@{'/public/bootstrap/navigation/js/responsive-nav.js'}"></script>
 <div role="navigation" id="index" class="nav-collapse">
       <ul>
-        <li class="active"><a href="printRecords/html"><i class='glyphicon glyphicon-record'></i> 出单记录</a></li>
+        <li class="active"><a href="/printRecords/html"><i class='glyphicon glyphicon-record'></i> 出单记录</a></li>
         <li><a href="#"><i class='glyphicon glyphicon-registration-mark'></i> 保险公司</a></li>
         <li><a href="#"><i class='glyphicon glyphicon-credit-card'></i> 银行卡</a></li>
         <li><a href="#"><i class='glyphicon glyphicon-user'></i> 管理员</a></li>
@@ -14,7 +13,7 @@
       </ul>
     </div>
 
-    <div role="main" class="main" style="padding:1px;">
+    <div role="main" class="main" style="padding:0;overflow: hidden;">
       <a href="#nav" class="nav-toggle">菜单</a>
       <div id="main-content"></div>
     </div>

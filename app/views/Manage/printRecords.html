@@ -1,5 +1,16 @@
 #{extends 'Manage/grid.html' /}
-<script type="text/javascript" src="@{'/public/javascripts/manage/printRecords.js'}" ></script>
-<div class="records-container" style="width:100%;">
+
+<link rel="stylesheet" href="@{'/public/bootstrap/datapicker/css/datetimepicker.css'}"/>
+<script type="text/javascript" src="@{'/public/bootstrap/datapicker/js/bootstrap-datetimepicker.js'}" ></script>
+<script type="text/javascript" src="@{'/public/bootstrap/datapicker/js/locales/bootstrap-datetimepicker.zh-CN.js'}" ></script>
+<div class="search-box">
+<span>出单日期：<input type="text" class="form-control printDate"/></span>--
+<span>客户：<input class="form-control"/></span>--
+<span>操作员：<select class="form-control"><option>刘</option><option>杨</option></select></span>
+<span class="btn-box"><span class="button  button-rounded button-primary doSearch"><i class="glyphicon glyphicon-search"></i> 检索</span></span>
+<span class="btn-box"><span class="button button-rounded button-primary exportToExcel"><i class="glyphicon glyphicon-export"></i> 导出Excel</span></span>
+</div>
+<div class="records-container">
 
 </div>
+<script type="text/javascript" src="@{'/public/javascripts/manage/printRecords.js'}" ></script>
