@@ -2,13 +2,11 @@ package controllers;
 
 import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import models.InsuranceAgent;
 import models.Managers;
 import models.MonadPrintRecord;
 import play.mvc.Controller;
+import utils.JSONBuilder;
 
 public class Manage extends Controller {
 	public static void index(Managers manager){
@@ -26,14 +24,12 @@ public class Manage extends Controller {
 			
 		}
 		List<MonadPrintRecord> list=MonadPrintRecord.findAll();
-		Gson gson = new GsonBuilder()
-				.serializeNulls().setDateFormat("yyyy-MM-dd")
-				.create();
-		renderJSON(gson.toJson(list));
+		String js=JSONBuilder.build(List.class).toJson(list);
+		renderJSON(js);
 	}
 	
 	public static void getAgents(){
 		List<InsuranceAgent> list=InsuranceAgent.findAll();
-		renderJSON(list);
+		renderJSON(JSONBuilder.build(List.class).toJson(list));
 	}
 }

@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import play.db.jpa.GenericModel;
@@ -22,8 +24,11 @@ public class MonadPrintRecord extends GenericModel {
 	public Timestamp printDate;
 	@Column(name = "client_name")
 	public String clientName;
-	@Column(name = "agent_id")
-	public Integer insuranceAgentId;
+//	@Column(name = "agent_id")
+//	public Integer insuranceAgentId;
+	@ManyToOne
+	@JoinColumn(name="agent_id")
+	public InsuranceAgent agent;
 	@Column(name = "tevel_tax")
 	public Float tavelTax;// 车船税
 	@Column(name = "insurace_type_id")

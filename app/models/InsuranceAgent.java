@@ -1,9 +1,13 @@
 package models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import play.db.jpa.GenericModel;
@@ -19,4 +23,6 @@ public class InsuranceAgent extends GenericModel {
 	public String agentName;
 	@Column(name="agent_rebate")
 	public Float agentRebate;
+	@OneToMany(mappedBy="agent",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	public List<MonadPrintRecord> records;
 }

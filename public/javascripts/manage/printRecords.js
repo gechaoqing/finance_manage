@@ -6,7 +6,7 @@
 		var agentsArray = function() {
 			var data = [];
 			$.ajax({
-				url : "/agent/data",
+				url : "/manage/agent/data",
 				async : false,
 				data : {},
 				dataType : "json",
@@ -24,7 +24,7 @@
 		var records = function() {
 			var data = null;
 			$.ajax({
-				url : "/printRecords/data",
+				url : "/manage/printRecords/data",
 				async : false,
 				data : {},
 				dataType : "json",
@@ -61,7 +61,7 @@
 						type : 'date'
 					},
 					{
-						data : "insuranceAgentId",
+						data : "agent.agentName",
 						type : 'dropdown',
 						source : agentsArray(),
 						strict : true,

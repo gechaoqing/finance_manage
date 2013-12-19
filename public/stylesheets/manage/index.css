@@ -54,6 +54,9 @@
 	font-family: "Microsoft Yahei";
 	font-size:12px;
 }
+.handsontable .htAutocompleteArrow{
+	display:inline-block;
+}
 .main .wtHolder{
 	font-size:12px;
 	color:#000
