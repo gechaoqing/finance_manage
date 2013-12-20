@@ -10,6 +10,9 @@ POST    /validate.xhtml                         Application.volidateLogin
 
 
 GET     /manage/index.xhtml                     Manage.index
+GET     /printRecords/html                      Manage.printRecords
+*       /manage/printRecords/data                      Manage.getPrintRecords
+*       /manage/agent/data                             Manage.getAgents
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
