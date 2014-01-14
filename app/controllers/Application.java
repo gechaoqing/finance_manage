@@ -23,6 +23,7 @@ public class Application extends Controller {
 				Application.class.getResourceAsStream("systemSetting.conf"))
 				.getProperty("ip.limit"));
         boolean access = true;
+        //commit test
 		if (iplimit) {
 			IpMacAddress ima = IpMacAddress.instance();
 			String ip = ima.getIpAddress(request);
