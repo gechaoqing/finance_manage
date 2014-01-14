@@ -16,8 +16,17 @@ import java.util.*;
 import models.*;
 
 public class Application extends Controller {
+    final static String LOGIN_RESPONSE="login-response";
+    final static String LOGIN_USER_ID="login-user-id";
+    final static String LOGIN_USER="login-user";
 
-	public static void index(String msg) {
+    final static int PRINT_RECORD=1000;
+    final static int AGENTS=1001;
+    final static int BUSSENESS=1002;
+    final static int BANK_CARD=1003;
+    final static int AGENT_TYPE=1004;
+    final static int MANAGER=1005;
+	public static void index() {
 		PropertiesUtils pro = PropertiesUtils.instance();
 		boolean iplimit = Boolean.parseBoolean(pro.$(
 				Application.class.getResourceAsStream("systemSetting.conf"))
@@ -33,6 +42,7 @@ public class Application extends Controller {
 			String randomID = Codec.UUID();
 			String account = Application.getCookVal("authUser");
 			String pwd = Application.getCookVal("authPwd");
+            String msg=session.get(LOGIN_RESPONSE);
 			render(randomID, account, pwd, msg);
 		} else {
 			renderHtml("<style>.alert {font-family:'Microsoft Yahei';padding: 15px;display:block;  margin-bottom: 20px;  border: 1px solid transparent;  border-radius: 4px;}.alert-danger {color: #b94a48;  background-color: #f2dede;  border-color: #eed3d7;}</style><div style='padding:50px;text-align:center'><span class='alert alert-danger'><b>无权限！</b><p>你没有权限进入该系统。请自觉离开！</p></span></div>");
@@ -83,20 +93,23 @@ public class Application extends Controller {
 	public static void volidateLogin(String account, String pass,
 			String randomID, String code, int rememberme) {
 		code = code.toUpperCase();
+        session.clear();
 		String msg = "验证码错误!";
 		if (code.equals(Cache.get(randomID))) {
 			Managers m=Managers.validateUser(account, pass);
 			if(m!=null){
 				setCook(true, "authUser", account);
 				setCook((rememberme == 1), "authPwd", pass);
-				session.put("user_id", m.userId);
-				Manage.index(m);
+				session.put(LOGIN_USER_ID, m.userId);
+				Manage.index();
 			}else{
 				msg="用户名或密码错误!";
-				index(msg);
+                session.put(LOGIN_RESPONSE,msg);
+				index();
 			}
 		} else {
-			index(msg);
+            session.put(LOGIN_RESPONSE,msg);
+			index();
 		}
 	}
 
@@ -108,23 +121,15 @@ public class Application extends Controller {
 		renderBinary(captcha);
 	}
 
-	public static void toManage() {
-		Managers user = getCacheUser();
-		if (user == null) {
-			index("请求超时！");
-		}
-		render("Manage/index.html", user);
-	}
-
 	protected static Managers getCacheUser() {
-		Managers u = (Managers) Cache.get("user");
+		Managers u = (Managers) Cache.get(LOGIN_USER);
 		if (u == null) {
-			String user_id = session.get("user_id");
+			String user_id = session.get(LOGIN_USER_ID);
 			if (user_id == null) {
 				return null;
 			}
 			u = Managers.findById(Long.parseLong(user_id));
-			Cache.set("user", u, "30mn");
+			Cache.set(LOGIN_USER, u, "30mn");
 		}
 		return u;
 	}
