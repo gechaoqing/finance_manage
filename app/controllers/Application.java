@@ -22,7 +22,7 @@ public class Application extends Controller {
 		boolean iplimit = Boolean.parseBoolean(pro.$(
 				Application.class.getResourceAsStream("systemSetting.conf"))
 				.getProperty("ip.limit"));
-		boolean access = true;
+        boolean access = true;
 		if (iplimit) {
 			IpMacAddress ima = IpMacAddress.instance();
 			String ip = ima.getIpAddress(request);
