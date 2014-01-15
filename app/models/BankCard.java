@@ -21,4 +21,6 @@ public class BankCard extends GenericModel {
 	public String cardName;
 	@Column(name="add_date")
 	public Timestamp addDate;
+    @Column(name = "card_no")
+    public String cardNo;
 }

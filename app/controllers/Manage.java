@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +9,13 @@ import play.mvc.Controller;
 import utils.JSONBuilder;
 import utils.Pagination;
 
+import static controllers.Application.*;
+
 public class Manage extends Controller {
 	public static void index(){
-        String uid=session.get(Application.LOGIN_USER_ID);
+        String uid=session.get(LOGIN_USER_ID);
 		if(uid==null){
-            session.put(Application.LOGIN_RESPONSE,"超时!");
+            session.put(LOGIN_RESPONSE,"超时!");
 			Application.index();
 		}
         Managers manager=Managers.findById(Integer.decode(uid));
@@ -22,7 +23,7 @@ public class Manage extends Controller {
 	}
 
     public static void html(String manage){
-        String uid=session.get(Application.LOGIN_USER_ID);
+        String uid=session.get(LOGIN_USER_ID);
         if(uid==null){
             render("/Manage/login.html");
         }else{
@@ -35,7 +36,7 @@ public class Manage extends Controller {
         Object[] vals=genVals(val);
         String data="";
         switch (type){
-            case Application.PRINT_RECORD:
+            case PRINT_RECORD:
                 if("".equals(keys)){
                     keys="printDate";
                     vals=new Object[]{new java.util.Date()};
@@ -49,19 +50,19 @@ public class Manage extends Controller {
 	public static void data(int type,int current,String [] key,String [] val){
         Pagination page=Pagination.getInstance();
         switch (type){
-            case Application.AGENTS:
+            case AGENTS:
                 renderJSON(getAgents(page,current,key,val));
                 break;
-            case Application.AGENT_TYPE:
+            case AGENT_TYPE:
                  renderJSON(getAgentType(page,current,key,val));
                 break;
-            case Application.BANK_CARD:
+            case BANK_CARD:
                 renderJSON(getBankCard(page,current,key,val));
                 break;
-            case Application.MANAGER:
+            case MANAGER:
                 renderJSON(getManagers(page,current,key,val));
                 break;
-            case Application.BUSINESS:
+            case BUSINESS:
                 renderJSON(getBusiness(page,current,key,val));
                 break;
         }

@@ -17,5 +17,7 @@ public class Business extends GenericModel{
     @Column(name = "business_id")
     public Integer businessId;
     @Column(name = "business_name")
-    public String businesName;
+    public String businessName;
+    @Column(name = "business_store")
+    public String businessStore;
 }
