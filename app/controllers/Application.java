@@ -20,9 +20,14 @@ public class Application extends Controller {
     final static String LOGIN_USER_ID="login-user-id";
     final static String LOGIN_USER="login-user";
 
+    final static int SOURCE_AGENT=0;
+    final static int SOURCE_AGENT_TYPE=1;
+    final static int SOURCE_BANK_CARD=2;
+    final static int SOURCE_MANAGER=3;
+
     final static int PRINT_RECORD=1000;
     final static int AGENTS=1001;
-    final static int BUSSENESS=1002;
+    final static int BUSINESS=1002;
     final static int BANK_CARD=1003;
     final static int AGENT_TYPE=1004;
     final static int MANAGER=1005;
@@ -90,7 +95,7 @@ public class Application extends Controller {
 		}
 	}
 
-	public static void volidateLogin(String account, String pass,
+	public static void signIn(String account, String pass,
 			String randomID, String code, int rememberme) {
 		code = code.toUpperCase();
         session.clear();
@@ -112,6 +117,11 @@ public class Application extends Controller {
 			index();
 		}
 	}
+
+    public static void signout(){
+        session.clear();
+        index();
+    }
 
 	public static void getVerifyCode(String id) {
 		Images.Captcha captcha = Images.captcha();

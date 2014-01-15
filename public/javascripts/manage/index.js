@@ -1,3 +1,4 @@
+var tableData;
 $(function(){
 	$.get($("#index ul li.active a").attr("href"),function(data){
 		$("#main-content").html(data);
@@ -9,5 +10,16 @@ $(function(){
 		}
 		$("#index li.active").removeClass("active");
 		$(this).parent().addClass("active");
+        getHtml($(this).attr("href"));
 	});
+    function getHtml(url) {
+        if(typeof(url)=='undefined'||url=="#"){
+            return;
+        }
+        var l=TableJS.layer();
+        $.get(url, function(res) {
+            $("#main-content").html(res);
+            $("#"+l).remove();
+        });
+    }
 });

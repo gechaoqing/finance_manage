@@ -6,13 +6,14 @@
 GET     /                                       Application.index
 GET     /verifyCode                             Application.getVerifyCode
 *       /index.xhtml                            Application.index
-POST    /validate.xhtml                         Application.volidateLogin
+POST    /manager/signin                         Application.signIn
 
 
 GET     /manage/index.xhtml                     Manage.index
-GET     /printRecords/html                      Manage.printRecords
-*       /manage/printRecords/data                      Manage.getPrintRecords
-*       /manage/agent/data                             Manage.getAgents
+GET     /manage/{manage}/xhtml                  Manage.html
+POST    /manage/{type}/data                     Manage.data
+POST    /manage/{type}/data/noPage              Manage.noPage
+POST    /manage/{source}/source                 Manage.getSource
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

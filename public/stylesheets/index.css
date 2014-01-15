@@ -54,12 +54,14 @@ body {
 .login-form .form-head .title {
 	font-size: 20px;
 }
-.form-head .credits-icon{
-	background-image:url(../images/favicon.png);
+.form-head .finance-logo{
 	width:32px;
 	height:32px;
 	vertical-align: middle;
 	display: inline-block;
+}
+.form-head .finance-logo img{
+    max-height: 32px;
 }
 
 .login-form .form-head .sub-title {

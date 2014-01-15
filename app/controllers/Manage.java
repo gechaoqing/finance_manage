@@ -1,10 +1,14 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import models.*;
+import play.db.jpa.Model;
 import play.mvc.Controller;
 import utils.JSONBuilder;
+import utils.Pagination;
 
 public class Manage extends Controller {
 	public static void index(){
@@ -13,7 +17,7 @@ public class Manage extends Controller {
             session.put(Application.LOGIN_RESPONSE,"超时!");
 			Application.index();
 		}
-        Managers manager=Managers.findById(Long.decode(uid));
+        Managers manager=Managers.findById(Integer.decode(uid));
 		render(manager);
 	}
 
@@ -26,7 +30,7 @@ public class Manage extends Controller {
         }
     }
 
-    public static void nopage(int type,String [] key,String [] val){
+    public static void noPage(int type,String [] key,String [] val){
         String keys=genKeys(key,true);
         Object[] vals=genVals(val);
         String data="";
@@ -42,18 +46,126 @@ public class Manage extends Controller {
         }
         renderJSON(data);
     }
-	public static void data(int type,String [] key,String [] val){
-        String keys=genKeys(key,true);
-        Object[] vals=genVals(val);
+	public static void data(int type,int current,String [] key,String [] val){
+        Pagination page=Pagination.getInstance();
         switch (type){
-            case Application.PRINT_RECORD:
-                if("".equals(keys)){
-                    keys="";
-                }
+            case Application.AGENTS:
+                renderJSON(getAgents(page,current,key,val));
+                break;
+            case Application.AGENT_TYPE:
+                 renderJSON(getAgentType(page,current,key,val));
+                break;
+            case Application.BANK_CARD:
+                renderJSON(getBankCard(page,current,key,val));
+                break;
+            case Application.MANAGER:
+                renderJSON(getManagers(page,current,key,val));
+                break;
+            case Application.BUSINESS:
+                renderJSON(getBusiness(page,current,key,val));
                 break;
         }
-		renderJSON("");
 	}
+
+    static Map<Object,Object> getBusiness(Pagination page,int current,String [] key,String [] val){
+        String keys=genKeys(key,true);
+        Object[] val_=genVals(val);
+        List<Model> list;
+        int count;
+        if(key==null){
+            count=(int)Business.count();
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=Business.findAll();
+        }
+        else{
+            count=(int)Business.count(keys,val_);
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=Business.find(keys,val_).from(page.getStartRow()).fetch(page.getDisplayCountOfPerPage());
+        }
+        return JSONBuilder.paginationList(page,list);
+    }
+
+    static Map<Object,Object> getAgents(Pagination page,int current,String [] key,String [] val){
+        String keys=genKeys(key,true);
+        Object[] val_=genVals(val);
+        List<Model> list;
+        int count;
+        if(key==null){
+            count=(int)InsuranceAgent.count();
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=InsuranceAgent.findAll();
+        }
+        else{
+            count=(int)InsuranceAgent.count(keys,val_);
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=InsuranceAgent.find(keys,val_).from(page.getStartRow()).fetch(page.getDisplayCountOfPerPage());
+        }
+        return JSONBuilder.paginationList(page,list);
+    }
+
+    static Map<Object,Object> getManagers(Pagination page,int current,String [] key,String [] val){
+        String keys=genKeys(key,true);
+        Object[] val_=genVals(val);
+        List<Model> list;
+        int count;
+        if(key==null){
+            count=(int)Managers.count();
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=Managers.findAll();
+        }
+        else{
+            count=(int)Managers.count(keys,val_);
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=Managers.find(keys,val_).from(page.getStartRow()).fetch(page.getDisplayCountOfPerPage());
+        }
+        return JSONBuilder.paginationList(page,list);
+    }
+
+    static Map<Object,Object> getBankCard(Pagination page,int current,String [] key,String [] val){
+        String keys=genKeys(key,true);
+        Object[] val_=genVals(val);
+        List<Model> list;
+        int count;
+        if(key==null){
+            count=(int)BankCard.count();
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=BankCard.findAll();
+        }
+        else{
+            count=(int)BankCard.count(keys,val_);
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=BankCard.find(keys,val_).from(page.getStartRow()).fetch(page.getDisplayCountOfPerPage());
+        }
+        return JSONBuilder.paginationList(page,list);
+    }
+
+    static Map<Object,Object> getAgentType(Pagination page,int current,String [] key,String [] val){
+        String keys=genKeys(key,true);
+        Object[] val_=genVals(val);
+        List<Model> list;
+        int count;
+        if(key==null){
+            count=(int)InsuranceType.count();
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=InsuranceType.findAll();
+        }
+        else{
+            count=(int)InsuranceType.count(keys,val_);
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=InsuranceType.find(keys,val_).from(page.getStartRow()).fetch(page.getDisplayCountOfPerPage());
+        }
+        return JSONBuilder.paginationList(page,list);
+    }
 
     static String genKeys(String[] key,boolean isplit,String... val){
         if(key==null){
@@ -121,18 +233,24 @@ public class Manage extends Controller {
 	}
 
     public static void getSource(int type){
-        if(type==0){
-            List<InsuranceAgent> list=InsuranceAgent.findAll();
-            renderJSON(JSONBuilder.build(List.class).toJson(list));
-        }else if(type==1){
-            List<InsuranceType> list= InsuranceType.findAll();
-            renderJSON(list);
-        }else if(type==2){
-            List<BankCard> list=BankCard.findAll();
-            renderJSON(list);
-        }else if(type==3){
-            List<Managers> list=Managers.findAll();
-            renderJSON(list);
+        List<Model> list=null;
+        switch (type){
+            case Application.SOURCE_AGENT:
+                list=InsuranceAgent.findAll();
+                renderJSON(JSONBuilder.build(List.class).toJson(list));
+                break;
+            case Application.SOURCE_AGENT_TYPE:
+                list= InsuranceType.findAll();
+                renderJSON(list);
+                break;
+            case Application.SOURCE_BANK_CARD:
+                list=BankCard.findAll();
+                renderJSON(list);
+                break;
+            case Application.SOURCE_MANAGER:
+                list=Managers.findAll();
+                renderJSON(list);
+                break;
         }
     }
 }

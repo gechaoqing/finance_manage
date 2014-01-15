@@ -37,4 +37,10 @@ $(function(){
 			$(".login-btn").click();
 		}
 	});
+    $("input[name='code']").keypress(function(e){
+        var k=e.which;
+        if(k===13){
+            $(".login-btn").click();
+        }
+    });
 });
