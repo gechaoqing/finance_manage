@@ -1,0 +1,141 @@
+#{extends 'modal.html' /}
+<style>
+.form-horizontal .control-label{
+   width:100px;
+}
+.form-horizontal .controls{
+   margin-left:120px;
+}
+.form-horizontal .controls input[type=text],.form-horizontal .controls textarea{
+   min-width:300px;
+}
+.form-horizontal .controls select{
+   padding:3px;
+}
+.privew img{
+   max-height:30px;
+}
+</style>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">×</button>
+	<h3 class="modal-title">${data!=null?'编辑权限['+data.name+']':'添加权限'}</h3>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal data-form" style='margin-bottom: 0' method="post">
+		#{if data!=null}
+		  <input type="hidden" name="data.id" value="${data.id}"/>
+		#{/if}
+		#{if data==null}
+		<div class="control-group">
+			<label class="control-label">类型</label>
+			<div class="controls">
+			    <label class="radio inline"> <input type="radio" ${data!=null&&data.type==1?'checked':data==null?'checked':''} name="data.type"
+					value="1"> 学校管理
+				</label>
+				<label class="radio inline"> <input type="radio" name="data.type" ${data!=null&&data.type==0?'checked':''}
+					value="0"> 全局管理
+				</label>
+			</div>
+		</div>
+		#{/if}
+		<div class="control-group">
+			<label class="control-label" for="name">权限名称</label>
+			<div class="controls">
+				<input type="text" id="name" value="${data!=null?data.name:''}" placeholder="权限名称" name="data.name">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="value">权限值</label>
+			<div class="controls">
+				<input type="text" id="value" value="${data!=null?data.value:''}" placeholder="权限值" name="data.value">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="url">权限URL</label>
+			<div class="controls">
+				<input type="text" id="url" value="${data!=null?data.url:''}" placeholder="权限URL" name="data.url">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="logo">权限 ICON</label>
+			<div class="controls">
+			   <input type="text" id="icon" placeholder="权限ICON" value="${data!=null?data.icon:''}" name="data.icon">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="parent">父节点</label>
+			<div class="controls">
+			   <select id="parent" name="data.parent">
+			    <option value="-1">该节点是父节点</option>
+			   </select>
+			   <!-- <input type="text" id="icon" placeholder="权限ICON" value="${data!=null?data.icon:''}" name="data.icon"> -->
+			</div>
+		</div>
+	</form>
+	<input type="hidden" id="isId" value="${data!=null?data.id:''}"/>
+	<input type="hidden" id="isN" value="${data!=null?data.parent:''}"/>
+</div>
+<div class="modal-footer" style="margin-top: 0">
+	<button class="btn btn-default" data-dismiss="modal">取消</button>
+	<button class='btn btn-info save'>保存</button>
+</div>
+<script type="text/javascript">
+<!--
+$(function(){
+	var t=$("input[name='data.type']:checked").val();
+	var type="${data==null?'-1':data.type}";
+	type=(type=="-1"?t:type);
+	getPrivileges(type);
+	$("input[name='data.type']").click(function(){
+		getPrivileges($(this).val());
+	});
+	function getPrivileges(type){
+		var isN=$("#isN").val();
+		var isId=$("#isId").val();
+		$("select[name='data.parent']").html("<option value='-1'>该节点是父节点</option>");
+		$.ajax({
+			type:"post",
+			url:"/schoolres/3/data/noPage",
+			data:{"key[0]":"parent","value[0]":"-1","key[1]":"type","value[1]":type},
+			dataType:"json",
+			success:function(res){
+				if(res){
+					for(var i=0;i<res.length;i++){
+						var sele="";
+						if(isN&&res[i].id==isN){
+							sele="selected"
+						}if(res[i].id==isId){
+							continue;
+						}
+						$("select[name='data.parent']").append("<option value='"+res[i].id+"' "+sele+">"+res[i].name+"</option>");
+					}
+				}
+			},
+			error:function(r,e,t){
+				alert("ERROR:"+e);
+			}
+		});
+	}
+});
+$(".btn.save").click(function(){
+	if(validate.empty($("#name"))||validate.empty($("#value"))||validate.empty($("#url"))){
+		return;
+	}
+	$(".data-form").ajaxSubmit({
+		url:"${data!=null?'/schoolres/3/update/data':'/schoolres/3/add/data'}",
+		dataType:"json",
+		success:function(res){
+			modalJs.response(res,function(){
+				dataTable.loadData();
+			});
+		},
+		error:function(r,e,t){
+			alert("ERROR:"+e);
+			modalJs.close();
+		}
+	});
+});
+//-->
+</script>
+
+

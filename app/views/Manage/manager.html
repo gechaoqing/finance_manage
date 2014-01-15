@@ -1,0 +1,39 @@
+
+<div class="header">
+	<h1 class="page-title">后台用户管理</h1>
+</div>
+
+<ul class="breadcrumb">
+	<li><a href="/schoolres/index/html">管理后台</a><span class="divider">/</span></li>
+	<li class="active">后台用户管理</li>
+</ul>
+
+<div class="container-fluid main">
+    <input type="hidden" id="logid" value="${longid}">
+	<div class="row-fluid">
+		<div class="row-fluid">
+			<div class="block">
+				<p class="block-heading">用户列表</p>
+				<div class="block-body">
+					<p>
+						<a href="/schoolres/managerAdd/html" data-toggle="modal" class="btn btn-primary btn-small">创建用户</a>
+					</p>
+					<div class="data-list"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<hr>
+		<p class="pull-right">
+			<a href="http://www.gwsoft.com.cn" target="_blank">GWSoft</a>
+		</p>
+		<p>
+			&copy; 2013 <a href="http://www.gwsoft.com.cn" target="_blank">长城软件股份有限公司</a>
+		</p>
+	</footer>
+</div>
+<script src="@{'/public/bootstrap/js/bootstrap.js'}"></script>
+<script src="@{'/public/javascripts/schoolres/manager.js'}"></script>
+
+

@@ -1,0 +1,83 @@
+#{extends 'modal.html' /}
+<style>
+.not-has label{
+	background: #eee;
+}
+
+.has label{
+	background: #DEFAD9;
+	color:#3B8732;
+}
+
+.modal .modal-body {
+	padding: 1em;
+}
+
+input[type=checkbox] {
+	margin: 0;
+	vertical-align: middle;
+}
+label{
+   display: inline-block;
+   margin:5px;
+   padding:3px 5px;
+   border:1px solid #ddd;
+}
+</style>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">×</button>
+	<h3 class="modal-title">
+		为[<font color="#08c">${name}</font>]分配角色
+	</h3>
+</div>
+<div class="modal-body">
+    
+	<div class="not-has">
+	    #{list notHas,as:'p'}
+        <label><input type="checkbox" value="${p.id}" /> ${p.name}</label>
+        #{/list}
+	</div>
+	<div class="has">
+			#{list has,as:'p'}
+			<label><input type="checkbox" value="${p.id}" checked /> ${p.name}</label>
+			 #{/list}
+	</div>
+</div>
+<div class="modal-footer" style="margin-top: 0">
+	<button class="btn btn-default" data-dismiss="modal">取消</button>
+	<button class='btn btn-info save'>保存</button>
+</div>
+<script type="text/javascript">
+<!--
+	$(function() {
+		var remove=[],add=[];
+		$(".btn.save").click(function() {
+			 $(".has input[type=checkbox]").each(function(){
+				   if(!$(this).prop("checked")){
+					   remove.push($(this).val());
+				   } 
+				   
+			 });
+			 $(".not-has input[type=checkbox]").each(function(){
+				   if($(this).prop("checked")){
+					   add.push($(this).val());
+				   } 
+			 });
+			 $.ajax({
+				 type:"post",
+				 url:"/schoolres/assignRole",
+				 data:{add:add.join(";"),remove:remove.join(";"),id:"${id}"},
+				 dataType:"json",
+				 success:function(res){
+					 modalJs.response(res);
+				 },error:function(r,e,t){
+					 alert("ERROR:"+e);
+					 modalJs.close();
+				 }
+			 });
+		});
+	});
+//-->
+</script>
+
+

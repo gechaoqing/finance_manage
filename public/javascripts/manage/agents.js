@@ -9,5 +9,4 @@ $(function(){
         url:"/manage/1001/data",
         urlPara:{}
     });
-
 });

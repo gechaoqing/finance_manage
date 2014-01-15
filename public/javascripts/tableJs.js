@@ -21,6 +21,19 @@
         }
     }
 
+    function adjustHeight(){
+        function getHeight(){
+            var ph=$(".tableJs-container").next().outerHeight();
+            return $(".main").outerHeight()-$(".search-box").outerHeight()-ph;
+        }
+        var h=getHeight();
+        $(".tableJs-container").css({"min-height":h,"height":h});
+        $(window).resize(function(){
+            var h=getHeight();
+            $(".tableJs-container").css({"min-height":h,"height":h});
+        });
+    }
+
     function defaultComplete() {
         $('a.btn').unbind("click");
         $('a.btn').click(
@@ -53,6 +66,7 @@
                     }
                 }
             });
+        adjustHeight();
     }
 
     function getLayer(txt, txtstyle) {
@@ -108,7 +122,7 @@
                 dataType: "json",
                 success: function (data) {
                     fillTableData(opt.titles, data, table.find("tbody"), opt.noneDataTip);
-                    $(opt.container).html(table);
+                    $(opt.container).html($("<div class='tableJs-container'></div>").append(table));
                     imgTooltip();
                     if (data.page) {
                         var page = getPagination(data.page.currentPage,
@@ -128,7 +142,7 @@
             })
         } else {
             fillTableData(opt.titles, opt.data, table.find("tbody"), opt.noneDataTip);
-            $(opt.container).html(table);
+            $(opt.container).html($("<div class='tableJs-container'></div>").append(table));
             imgTooltip();
             if (opt.data.page) {
                 page = getPagination(opt.data.page.currentPage,

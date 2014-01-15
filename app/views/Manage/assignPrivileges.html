@@ -1,0 +1,107 @@
+#{extends 'modal.html' /}
+<style>
+.not-has label{
+	background: #DCF2FA;
+}
+
+.has label{
+	background: #DEFAD9;
+	color:#3B8732;
+}
+
+.modal .modal-body {
+	padding: 1em;
+}
+
+input[type=checkbox] {
+	margin: 0;
+	vertical-align: middle;
+}
+label{
+   display: inline-block;
+   margin:5px;
+   padding:3px 5px;
+   border:1px solid #ddd;
+}
+</style>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">×</button>
+	<h3 class="modal-title">
+		为[<font color="#08c">${name}</font>]分配权限
+	</h3>
+</div>
+<div class="modal-body">
+    
+	<div class="not-has">
+	    #{list notHas,as:'p'}
+	    #{if (p.parent==null||p.parent==-1)&&"#".equals(p.url)}
+         <label style="background:#eee;"><input type="checkbox" id="privi-${p.id}" value="${p.id}" data-parent="${p.parent}" onclick="return false;" /> ${p.name}</label>
+        #{/if}
+        #{else}
+        <label><input type="checkbox" id="privi-${p.id}" value="${p.id}" data-parent="${p.parent}" /> ${p.name}</label>
+        #{/else}
+        #{/list}
+	</div>
+	<div class="has">
+			#{list has,as:'p'}
+			#{if (p.parent==null||p.parent==-1)&&"#".equals(p.url)}
+         <label style="background:#eee;"><input type="checkbox" id="privi-${p.id}" checked value="${p.id}" data-parent="${p.parent}" onclick="return false;" /> ${p.name}</label>
+        #{/if}
+        #{else}
+        <label><input type="checkbox" id="privi-${p.id}" value="${p.id}" checked data-parent="${p.parent}" /> ${p.name}</label>
+        #{/else}
+			 #{/list}
+	</div>
+</div>
+<div class="modal-footer" style="margin-top: 0">
+	<button class="btn btn-default" data-dismiss="modal">取消</button>
+	<button class='btn btn-info save'>保存</button>
+</div>
+<script type="text/javascript">
+<!--
+	$(function() {
+		var remove=[],add=[];
+		$(".btn.save").click(function() {
+			 $(".has input[type=checkbox]").each(function(){
+				   if(!$(this).prop("checked")){
+					   remove.push($(this).val());
+				   } 
+				   
+			 });
+			 $(".not-has input[type=checkbox]").each(function(){
+				   if($(this).prop("checked")){
+					   add.push($(this).val());
+				   } 
+			 });
+			 $.ajax({
+				 type:"post",
+				 url:"/schoolres/assignPrivilege",
+				 data:{add:add.join(";"),remove:remove.join(";"),id:"${id}"},
+				 dataType:"json",
+				 success:function(res){
+					 modalJs.response(res);
+				 },error:function(r,e,t){
+					 alert("ERROR:"+e);
+					 modalJs.close();
+				 }
+			 });
+		});
+		$("input[type=checkbox]").click(function(){
+			var pa=$("#privi-"+$(this).attr("data-parent"));
+			if(pa.length>0){
+				if($(this).prop("checked")){
+					pa.prop("checked",true);
+				}else{
+					var ps=$("input[data-parent="+$(this).attr("data-parent")+"]:checked").length;
+					if(ps==0){
+						pa.prop("checked",false);
+					}
+				}
+			}
+			
+		});
+	});
+//-->
+</script>
+
+
