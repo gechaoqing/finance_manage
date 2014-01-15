@@ -1,0 +1,39 @@
+$(function(){
+	suiteHeight();
+	var cols=[{
+		name:"权限名称",
+		field:"name"
+	},{
+		name:"类型",
+		field:"type",
+		type:"convert",
+		data:{"0":"全局管理","1":"学校管理"}
+	},{
+		name:"权限值",
+		field:"value"
+	},{
+		name:"权限URL",
+		field:"url"
+	},{
+		name:"权限ICON",
+		field:"icon",
+		type:"style"
+	},{
+		name:"操作",
+		data:[{
+			name:"修改",
+			href:"/schoolres/3/data/{id}"
+		},{
+			name:"<b>&times;</b> 删除",
+			href:"/schoolres/3/delConfirm/{id}",
+			className:"btn-danger"
+		}],
+		type:"operator"
+	}];
+	dataTable=TableJS.init({
+		titles:cols,
+		container:".privi-list",
+		url:"/schoolres/3/data",
+		urlPara:{}
+	});
+});
