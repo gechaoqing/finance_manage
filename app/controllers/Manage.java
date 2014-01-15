@@ -307,22 +307,9 @@ public class Manage extends Controller {
         }
         return val_;
     }
-	static void getPrintRecords(String date,String client,String operator){
-		if(date!=null||client!=null||operator!=null){
-			
-		}
-		List<MonadPrintRecord> list=MonadPrintRecord.findAll();
-		String js=JSONBuilder.build(List.class).toJson(list);
-		renderJSON(js);
-	}
-	
-	public static void getAgents(){
-		List<InsuranceAgent> list=InsuranceAgent.findAll();
-		renderJSON(JSONBuilder.build(List.class).toJson(list));
-	}
 
     public static void getSource(int type){
-        List<Model> list=null;
+        List<Model> list;
         switch (type){
             case Application.SOURCE_AGENT:
                 list=InsuranceAgent.findAll();
@@ -341,5 +328,17 @@ public class Manage extends Controller {
                 renderJSON(list);
                 break;
         }
+    }
+
+    static Long goSignin(boolean isModal) {
+        String longid = session.get(Application.LOGIN_USER_ID);
+        if (longid == null) {
+            if (isModal) {
+                render("/Manage/modalSignin.html");
+            }
+            render("/Manage/signin.html");
+            return null;
+        }
+        return Long.parseLong(longid);
     }
 }

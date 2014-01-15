@@ -4,11 +4,6 @@ $(function(){
 		name:"权限名称",
 		field:"name"
 	},{
-		name:"类型",
-		field:"type",
-		type:"convert",
-		data:{"0":"全局管理","1":"学校管理"}
-	},{
 		name:"权限值",
 		field:"value"
 	},{
@@ -30,9 +25,9 @@ $(function(){
 		}],
 		type:"operator"
 	}];
-	dataTable=TableJS.init({
+	tableData=TableJS.init({
 		titles:cols,
-		container:".privi-list",
+		container:".records-container",
 		url:"/schoolres/3/data",
 		urlPara:{}
 	});
