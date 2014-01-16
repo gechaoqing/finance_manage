@@ -124,15 +124,24 @@
             afterChange: function (change, source) {
                 console.log(change);
                 console.log("source=" + source);
-                if (source == "loadData") {
+                if (source === "loadData") {
                     return;
                 }
-                console.log(change[0][0]);
                 var data = $(".records-container").data('handsontable')
                     .getData();
-                console.log(data);
-                var id = data[change[0][0]].recordId;
-                console.log("recordId=" + id);
+                for(var j=0;j<change.length;j++){
+                    var d=data[change[j][0]];
+                    var id = d.recordId;
+                    if(id){
+                        var change=change[j][1];
+                        var val=change[j][3];
+                    }else{
+
+                    }
+                }
+//                console.log(data);
+
+//                console.log("recordId=" + id);
             },
 //			afterSelectionEnd:function(startRow,startCol,endRow,endCol){
 //				var hot = $container.handsontable('getInstance')
@@ -140,11 +149,14 @@
 //				console.log(hot.getCell(sel[2],sel[3]));
 //			},
             afterSelectionEndByProp: function (r, p, r2, p2) {
-                console.log(p);
-                console.log(p2);
+//                console.log(p);
+//                console.log(p2);
             }
         });
         $container.handsontable("render");
+    }
+    function changeRecord(id,data){
+
     }
 })(window, this);
 $(function () {
