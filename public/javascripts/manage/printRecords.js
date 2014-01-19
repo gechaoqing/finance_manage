@@ -127,16 +127,19 @@
                 if (source === "loadData") {
                     return;
                 }
-                var data = $(".records-container").data('handsontable')
-                    .getData();
+                var data = $(".records-container").data('handsontable').getData();
+                var chanageData={},addData={};
                 for(var j=0;j<change.length;j++){
                     var d=data[change[j][0]];
                     var id = d.recordId;
                     if(id){
-                        var change=change[j][1];
+                        var ch=change[j][1];
                         var val=change[j][3];
+                        changeData["data."+ch]=val;
                     }else{
-
+                        var ch=change[j][1];
+                        var val=change[j][3];
+                        addData["data."+ch]=val;
                     }
                 }
 //                console.log(data);
