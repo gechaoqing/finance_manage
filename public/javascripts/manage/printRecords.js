@@ -128,20 +128,28 @@
                     return;
                 }
                 var data = $(".records-container").data('handsontable').getData();
-                var chanageData={},addData={};
+                var changeDataList=[];
                 for(var j=0;j<change.length;j++){
+                    var chanageData={};
                     var d=data[change[j][0]];
                     var id = d.recordId;
                     if(id){
                         var ch=change[j][1];
                         var val=change[j][3];
                         changeData["data."+ch]=val;
+                        changeDataList.push(changeData);
                     }else{
+                        var addData={};
                         var ch=change[j][1];
                         var val=change[j][3];
                         addData["data."+ch]=val;
                     }
                 }
+                var submitData={};
+                for(var i=0;i<chanageDataList.length;i++){
+                    submitData["changes["+i+"]"]=changeDataList[i];
+                }
+                changeRecord(submitData);
 //                console.log(data);
 
 //                console.log("recordId=" + id);
@@ -158,8 +166,18 @@
         });
         $container.handsontable("render");
     }
-    function changeRecord(id,data){
+    function changeRecord(data){
+        $.ajax({
+            type:"post",
+            url:"",
+            data:data,
+            dataType:"json",
+            success:function(){
 
+            },error:function(){
+
+            }
+        });
     }
 })(window, this);
 $(function () {
