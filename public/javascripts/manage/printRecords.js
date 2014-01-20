@@ -1,9 +1,62 @@
 (function (window, document) {
     var printRecords = window.printRecords = {
-        render: gridRender
+        render: gridRender,
+        reload: reload
+    }
+
+    function reload() {
+        var para = [];
+        if (!$("input.printDate-start").val().isEmpty()) {
+            var ob = {};
+            ob.key = ">printDate";
+            ob.value = $("input.printDate-start").val();
+            para[para.length] = ob;
+        }
+        if (!$("input.printDate-end").val().isEmpty()) {
+            var ob = {};
+            ob.key = "<printDate";
+            ob.value = $("input.printDate-end").val();
+            para[para.length] = ob;
+        }
+        if (!$("input.customer").val().isEmpty()) {
+            var ob = {};
+            ob.key = "%businessName";
+            ob.value = "%" + $("input.customer").val() + "%";
+            para[para.length] = ob;
+        }
+        if ($("select.users").val() != -1) {
+            var ob = {};
+            ob.key = "userName";
+            ob.value = $("select.users").val();
+            para[para.length] = ob;
+        }
+        var urlPara = {};
+        for (var i = 0; i < para.length; i++) {
+            urlPara["key[" + i + "]"] = para[i].key;
+            urlPara["value[" + i + "]"] = para[i].value;
+        }
+        //if (para.length > 0) {
+            var l = TableJS.layer();
+            $.ajax({
+                url: "/manage/query/records",
+                data: urlPara,
+                type: "post",
+                dataType: "json",
+                success: function (records) {
+                    var condata = $(".records-container").data('handsontable');
+                    condata.loadData(records);
+                    $("#" + l).remove();
+                },
+                error: function (r, e, t) {
+                    alert("ERROR:" + e);
+                }
+            });
+       // }
+
     }
 
     function gridRender() {
+        var l = TableJS.layer();
         var getSource = function (source, name) {
             var data = [];
             if (!source) {
@@ -29,10 +82,10 @@
         var records = function () {
             var data = null;
             $.ajax({
-                url: "/manage/1000/data/noPage",
+                url: "/manage/query/records",
                 async: false,
-                data: {},
-                type:"post",
+                data: {isFirst:1},
+                type: "post",
                 dataType: "json",
                 success: function (records) {
                     data = records;
@@ -43,6 +96,7 @@
             });
             return data;
         };
+        $("#" + l).remove();
         var $container = $(".records-container");
         $container.handsontable({
             data: records(),
@@ -56,12 +110,9 @@
             currentRowClassName: 'currentRow',
             persistentState: true,
             // currentColClassName: 'currentCol',
-            colHeaders: [ "出单ID", "出单日期", "保险公司", "客户名称", "车船税", "保险类型", "金额",
+            colHeaders: [ "出单日期", "保险公司", "客户名称", "车船税", "保险类型", "金额",
                 "发票号", "保单号", "保单流水号", "商家", "刷卡", "操作员", "回销" ],
             columns: [
-                {
-                    data: "recordId"
-                },
                 {
                     data: "printDate",
                     type: 'date'
@@ -122,37 +173,31 @@
             width: $(".main").width(),
             height: $(".main").height() - 35,
             afterChange: function (change, source) {
-                console.log(change);
-                console.log("source=" + source);
                 if (source === "loadData") {
                     return;
                 }
                 var data = $(".records-container").data('handsontable').getData();
-                var changeDataList=[];
-                for(var j=0;j<change.length;j++){
-                    var chanageData={};
-                    var d=data[change[j][0]];
+                for (var j = 0; j < change.length; j++) {
+                    var d = data[change[j][0]];
+                    console.log(d);
                     var id = d.recordId;
-                    if(id){
-                        var ch=change[j][1];
-                        var val=change[j][3];
-                        changeData["data."+ch]=val;
-                        changeDataList.push(changeData);
-                    }else{
-                        var addData={};
-                        var ch=change[j][1];
-                        var val=change[j][3];
-                        addData["data."+ch]=val;
+                    if (id) {
+                        var changeData = {};
+                        var ch = change[j][1];
+                        var val = change[j][3];
+                        changeData["data." + ch] = val;
+                        changeData["data.recordId"] = id;
+                        changeRecord(changeData);
+                    } else {
+                        var addData = {};
+                        var ch = change[j][1];
+                        var val = change[j][3];
+                        if (val) {
+                            addData["data." + ch] = val;
+                            addRecord(addData,d);
+                        }
                     }
                 }
-                var submitData={};
-                for(var i=0;i<chanageDataList.length;i++){
-                    submitData["changes["+i+"]"]=changeDataList[i];
-                }
-                changeRecord(submitData);
-//                console.log(data);
-
-//                console.log("recordId=" + id);
             },
 //			afterSelectionEnd:function(startRow,startCol,endRow,endCol){
 //				var hot = $container.handsontable('getInstance')
@@ -166,24 +211,44 @@
         });
         $container.handsontable("render");
     }
-    function changeRecord(data){
+
+    function changeRecord(data) {
         $.ajax({
-            type:"post",
-            url:"",
-            data:data,
-            dataType:"json",
-            success:function(){
+            type: "post",
+            url: "/manage/printRecord/update",
+            data: data,
+            dataType: "json",
+            success: function (res) {
+                console.log(res);
+            }, error: function (r, e) {
+                alert(e);
+            }
+        });
+    }
 
-            },error:function(){
-
+    function addRecord(data,d) {
+        $.ajax({
+            type: "post",
+            url: "/manage/printRecord/add",
+            data: data,
+            dataType: "json",
+            success: function (res) {
+                d.recordId=res.response;
+                console.log(d);
+            }, error: function (r, e) {
+                alert(e);
             }
         });
     }
 })(window, this);
 $(function () {
     printRecords.render();
+    $(".doSearch").click(function () {
+        printRecords.reload();
+    });
     $("table.htCore").width($(".main").width());
-    $(".search-box .printDate").datetimepicker({
+    var now = new Date().format("yyyy-MM-dd");
+    $(".search-box .printDate-start").datetimepicker({
         language: 'zh-CN',
         format: "yyyy-mm-dd",
         weekStart: 1,
@@ -195,7 +260,26 @@ $(function () {
         forceParse: 1
     }).click(function () {
             $(this).datetimepicker("show");
-        });
+        }).on('changeDate',function (ev) {
+            if ($(this).val() > $(".search-box .printDate-end").val()) {
+                $(".search-box .printDate-end").val("");
+            }
+            $(".search-box .printDate-end").datetimepicker('setStartDate', $(this).val());
+        }).val(now);
+    $(".search-box .printDate-end").datetimepicker({
+        language: 'zh-CN',
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        startDate: now,
+        minView: 2,
+        forceParse: 1
+    }).click(function () {
+            $(this).datetimepicker("show");
+        }).val(now);
     var toExcel = (function () {
         var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function (s) {
             return window.btoa(unescape(encodeURIComponent(s)))

@@ -4,6 +4,7 @@ import models.Managers;
 import models.MonadPrintRecord;
 import play.db.jpa.Model;
 import play.mvc.Controller;
+import utils.DateUtils;
 import utils.JsonResponse;
 
 import static controllers.Application.*;
@@ -23,6 +24,16 @@ public class ManageUpdate extends Controller {
                 render("/Manage/manager.html",data);
                 break;
         }
+    }
+
+    public static void updatePrintRecord(MonadPrintRecord data){
+        data.save();
+        renderJSON(new JsonResponse(0,"change success!"));
+    }
+
+    public static void addPrintRecord(MonadPrintRecord data){
+        data.save();
+        renderJSON(new JsonResponse(0,data.recordId+""));
     }
 
     public static void updateData(int type) {
@@ -53,7 +64,6 @@ public class ManageUpdate extends Controller {
     private static <T extends Model> JsonResponse createT(T t, int model, String ok, String error) {
         t.id = null;
         switch (model) {
-
         }
         try {
             t.save();
@@ -65,7 +75,6 @@ public class ManageUpdate extends Controller {
 
     private static <T extends Model> JsonResponse updateT(T t, int model, String ok, String error) {
         switch (model) {
-
         }
         try {
             t.save();

@@ -1,16 +1,23 @@
 #{extends 'Manage/grid.html' /}
 
 <link rel="stylesheet" href="@{'/public/bootstrap/datapicker/css/datetimepicker.css'}"/>
-<script type="text/javascript" src="@{'/public/bootstrap/datapicker/js/bootstrap-datetimepicker.js'}" ></script>
-<script type="text/javascript" src="@{'/public/bootstrap/datapicker/js/locales/bootstrap-datetimepicker.zh-CN.js'}" ></script>
+<link rel="stylesheet" href="@{'/public/stylesheets/tableJs.css'}"/>
+<script type="text/javascript" src="@{'/public/bootstrap/datapicker/js/bootstrap-datetimepicker.js'}"></script>
+<script type="text/javascript"
+        src="@{'/public/bootstrap/datapicker/js/locales/bootstrap-datetimepicker.zh-CN.js'}"></script>
 <div class="search-box">
-<span>出单日期：<input type="text" class="form-control printDate"/></span>--
-<span>客户：<input class="form-control"/></span>--
-<span>操作员：<select class="form-control"><option>刘</option><option>杨</option></select></span>
-<span class="btn-box"><span class="button  button-rounded button-primary doSearch"><i class="glyphicon glyphicon-search"></i> 检索</span></span>
-<span class="btn-box"><span class="button button-rounded button-primary exportToExcel"><i class="glyphicon glyphicon-export"></i> 导出Excel</span></span>
+<span>
+        <input type="text" class="form-control printDate-start" /><b class="label" style="border-left: none">&lt;=出单日期&lt;=</b><input type="text" class="form-control printDate-end"/>
+   </span>
+    <span><b class="label">客户</b><input class="form-control customer"/></span>
+    <span><b class="label">操作员</b><select class="form-control users">
+        <option value="-1">不限操作员</option>#{list managers,as:'m'}
+        <option>${m.userName}</option>#{/list}</select></span>
+    <span class="btn-box"><span class="button  button-rounded button-primary doSearch"><i
+            class="glyphicon glyphicon-search"></i> 检索</span></span>
+    <span class="btn-box"><span class="button button-rounded button-primary exportToExcel"><i
+            class="glyphicon glyphicon-export"></i> 导出Excel</span></span>
 </div>
 <div class="records-container">
-
 </div>
-<script type="text/javascript" src="@{'/public/javascripts/manage/printRecords.js'}" ></script>
+<script type="text/javascript" src="@{'/public/javascripts/manage/printRecords.js'}"></script>

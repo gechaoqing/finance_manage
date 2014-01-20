@@ -1,16 +1,14 @@
 package models;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import play.db.jpa.GenericModel;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "t_print_record")
@@ -21,7 +19,7 @@ public class MonadPrintRecord extends GenericModel {
 	@Column(name = "record_id")
 	public Integer recordId;
 	@Column(name = "print_date")
-	public Timestamp printDate;
+	public Date printDate;
 	@Column(name = "client_name")
 	public String clientName;
 //	@Column(name = "agent_id")

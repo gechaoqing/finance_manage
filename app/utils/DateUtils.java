@@ -7,25 +7,28 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DateUtils {
-
+    static SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 	public static Date getNowDate() {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date utilDate = new java.util.Date();
 		Date sqlDate = new Date(utilDate.getTime());
 		return Date.valueOf(f.format(sqlDate));
 	}
-	
-	public static String getDaysNear(int near){
-		Calendar cal = Calendar.getInstance();//使用默认时区和语言环境获得一个日历。   
-		cal.add(Calendar.DAY_OF_MONTH, -near);
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-		return f.format(cal.getTime());
+
+	public static String getDaysNearStr(int near){
+		return f.format(getDaysNear(near));
 	}
+
+    public static Date getDaysNear(int near){
+        Calendar cal = Calendar.getInstance();//使用默认时区和语言环境获得一个日历。
+        cal.add(Calendar.DAY_OF_MONTH, near);
+        return Date.valueOf(f.format(cal.getTime()));
+    }
 	
-	public static String getMonthNear(int near){
+	public static String getMonthNearStr(int near){
 		Calendar cal = Calendar.getInstance();//使用默认时区和语言环境获得一个日历。
 		cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH));  
-		cal.add(Calendar.MONTH, -near);
+		cal.add(Calendar.MONTH, near);
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		return f.format(cal.getTime());
 	}

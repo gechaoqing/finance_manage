@@ -50,6 +50,17 @@
    -khtml-user-select: none; /*早期浏览器*/
    user-select: none;
 }
+.search-box input.form-control,.search-box select{
+    border-radius: 0;
+    border-color: #007998;
+}
+.label{
+    border-radius:0;line-height:18px;height: 25px;display: inline-block;
+    background-color: #00A1CB;
+    color: #fff;
+    border:1px solid #007998;
+    border-right: none;
+}
 .handsontableInputHolder .handsontableInput{
 	font-family: "Microsoft Yahei";
 	font-size:12px;
