@@ -1,6 +1,7 @@
 package utils;
 
 import com.google.gson.Gson;
+import com.techventus.server.voice.Voice;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
@@ -54,5 +55,15 @@ public class Sms {
                     + ", vcode_url=" + vcode_url + "]";
         }
 
+    }
+
+    static void sendSMs(String num,String text){
+        try {
+            Voice voi=new Voice("gechaoqing00@gmail.com", "bngmckbicdltafqw");
+            String res=voi.sendSMS(num, text);
+            System.out.println(res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
