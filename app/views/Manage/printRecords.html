@@ -7,10 +7,21 @@
         src="@{'/public/bootstrap/datapicker/js/locales/bootstrap-datetimepicker.zh-CN.js'}"></script>
 <div class="search-box">
 <span>
-        <input type="text" class="form-control printDate-start" /><b class="label" style="border-left: none">&lt;=出单日期&lt;=</b><input type="text" class="form-control printDate-end"/>
-   </span>
-    <span><b class="label">客户</b><input class="form-control customer"/></span>
-    <span><b class="label">操作员</b><select class="form-control users">
+    <b class="label">出单日期</b><span class="btn-group eq" data-toggle="buttons">
+       <label class="btn btn-default">
+           <input type="radio" name="options" id="option1" value=">"> &gt;
+       </label>
+       <label class="btn btn-default active">
+           <input type="radio" name="options" id="option2" value="="> =
+       </label>
+       <label class="btn btn-default">
+           <input type="radio" name="options" id="option3" value="<"> &lt;
+       </label>
+   </span><input type="text" class="form-control printDate input-right" style="border-left: none"/>
+
+</span>
+    <span><b class="label">客户</b><input class="form-control customer input-right"/></span>
+    <span><b class="label">操作员</b><select class="form-control users input-right">
         <option value="-1">不限操作员</option>#{list managers,as:'m'}
         <option>${m.userName}</option>#{/list}</select></span>
     <span class="btn-box"><span class="button  button-rounded button-primary doSearch"><i

@@ -22,5 +22,5 @@ public class InsuranceAgent extends GenericModel {
 	@Column(name="agent_name")
 	public String agentName;
 	@Column(name="agent_rebate")
-	public Float agentRebate;
+	public Integer agentRebate;
 }

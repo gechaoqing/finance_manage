@@ -14,15 +14,29 @@
 	vertical-align: text-top;
 	font-weight: normal;
 }
+#index ul li a.spec{
+    background:rgba(13, 154, 233, 0.3);
+}
+#index ul li a.spec:hover{
+    background:rgba(13, 154, 233, 0.5);
+    color:#f9f9f9;
+}
+#index ul li a.logout{
+    background:rgba(233, 31, 13, 0.3);
+}
+#index ul li a.logout:hover{
+    background:rgba(233, 31, 13, 0.5);
+    color:#fff;
+}
 
 .search-box {
 	width: 100%;
-	height: 35px;
+	height: 40px;
 	background: -webkit-gradient(linear, 0 0, 0 100%, from(#eee), to(#ddd));
 	background: -moz-linear-gradient(top, #eee, #ddd);
 	color:#000;
 	padding:0 10px;
-	line-height: 35px;
+	line-height: 40px;
 	font-size:12px;
 }
 .search-box input{
@@ -51,15 +65,25 @@
    user-select: none;
 }
 .search-box input.form-control,.search-box select{
+   /* border-radius: 0;
+    border-color: #007998;*/
+}
+.search-box .btn-group .btn{
+    line-height: 23px;
+    padding:0 5px;
     border-radius: 0;
-    border-color: #007998;
 }
 .label{
-    border-radius:0;line-height:18px;height: 25px;display: inline-block;
-    background-color: #00A1CB;
-    color: #fff;
-    border:1px solid #007998;
+    border-radius:4px 0 0 4px;
+    display: inline-block;
+    background-color: #eee;
+    color: #000;
+    line-height:17px;
+    border:1px solid #ccc;
     border-right: none;
+}
+.search-box .input-right{
+    border-radius:0 4px 4px 0 ;
 }
 .handsontableInputHolder .handsontableInput{
 	font-family: "Microsoft Yahei";

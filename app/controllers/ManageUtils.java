@@ -18,7 +18,7 @@ public class ManageUtils {
                 sbk.append(split + k.substring(1) + " like ?");
             } else if (k.indexOf(">") == 0 || k.indexOf("<") == 0) {
                 sbk.append(split + k.substring(1) + " " + k.substring(0, 1)
-                        + "=?");
+                        + "?");
             } else if (k.indexOf("<>") == 0) {
                 sbk.append(split + k.substring(2) + "<>?");
             } else if (k.indexOf("null") == 0) {

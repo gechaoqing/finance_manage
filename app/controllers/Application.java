@@ -122,7 +122,7 @@ public class Application extends Controller {
         }
     }
 
-    public static void signout() {
+    public static void logout() {
         session.clear();
         index();
     }

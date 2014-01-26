@@ -6,16 +6,12 @@
 
     function reload() {
         var para = [];
-        if (!$("input.printDate-start").val().isEmpty()) {
+        if (!$("input.printDate").val().isEmpty()) {
             var ob = {};
-            ob.key = ">printDate";
-            ob.value = $("input.printDate-start").val();
-            para[para.length] = ob;
-        }
-        if (!$("input.printDate-end").val().isEmpty()) {
-            var ob = {};
-            ob.key = "<printDate";
-            ob.value = $("input.printDate-end").val();
+            var eq=$(".btn-group.eq .active input").val();
+            eq=parseEq(eq);
+            ob.key = eq+"printDate";
+            ob.value = $("input.printDate").val();
             para[para.length] = ob;
         }
         if (!$("input.customer").val().isEmpty()) {
@@ -248,7 +244,7 @@ $(function () {
     });
     $("table.htCore").width($(".main").width());
     var now = new Date().format("yyyy-MM-dd");
-    $(".search-box .printDate-start").datetimepicker({
+    $(".search-box .printDate").datetimepicker({
         language: 'zh-CN',
         format: "yyyy-mm-dd",
         weekStart: 1,
@@ -256,25 +252,6 @@ $(function () {
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
-        minView: 2,
-        forceParse: 1
-    }).click(function () {
-            $(this).datetimepicker("show");
-        }).on('changeDate',function (ev) {
-            if ($(this).val() > $(".search-box .printDate-end").val()) {
-                $(".search-box .printDate-end").val("");
-            }
-            $(".search-box .printDate-end").datetimepicker('setStartDate', $(this).val());
-        }).val(now);
-    $(".search-box .printDate-end").datetimepicker({
-        language: 'zh-CN',
-        format: "yyyy-mm-dd",
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        startDate: now,
         minView: 2,
         forceParse: 1
     }).click(function () {

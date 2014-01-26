@@ -4,8 +4,13 @@ $(function(){
 			$(".form-signin").submit();
 		}
 	});
-	$("img.volidecode").click(function(){
-		$(this).attr("src","verifyCode?id="+$("input[name=randomID]").val());
+	$(".volidecode").click(function(){
+        var img=new Image();
+        img.src="verifyCode?id="+$("input[name=randomID]").val();
+        var _this=$(this);
+        img.onload=function(){
+            _this.html(img);
+        }
 	})
 	function validated(){
 		if($("input[name='account']").val().isEmpty()){

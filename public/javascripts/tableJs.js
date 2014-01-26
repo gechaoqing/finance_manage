@@ -392,8 +392,18 @@
                             join = title[j].data;
                             if (join && typeof (join) == "object") {
                                 for (var n = 0; n < join.length; n++) {
-                                    str += join[n].type
-                                        + eval("list[i]." + join[n].field);
+                                    if(join[n].field){
+                                        str += join[n].type
+                                            + eval("list[i]." + join[n].field);
+                                    }else{
+                                        if(join[n].pos==1){
+                                            var _t=join[n].text;
+                                            _t+=str;
+                                            str=_t;
+                                        }else{
+                                            str+=join[n].text;
+                                        }
+                                    }
                                 }
                             }
                         }
