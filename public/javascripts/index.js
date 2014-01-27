@@ -6,10 +6,11 @@ $(function(){
 	});
 	$(".volidecode").click(function(){
         var img=new Image();
-        img.src="verifyCode?id="+$("input[name=randomID]").val();
         var _this=$(this);
+        img.src="verifyCode?id="+$("input[name=randomID]").val()+"&time="+ new Date().getTime();
+        _this.html("");
         img.onload=function(){
-            _this.html(img);
+            _this.append(img);
         }
 	})
 	function validated(){

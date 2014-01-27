@@ -1,41 +1,12 @@
-
-<div class="header">
-	<h1 class="page-title">权限管理</h1>
+<div class="search-box" style="border-bottom: 1px solid #ccc;">
+    <span><b class="label">权限名称</b><input type="text" class="form-control name input-right"/></span>
+    <span><b class="label">权限值</b><input class="form-control rebate input-right"/></span>
+    <span class="btn-box"><span class="button  button-rounded button-primary doSearch"><i
+            class="glyphicon glyphicon-search"></i> 检索</span></span>
+    <span class="btn-box"><span class="button  button-rounded button-primary add-privilege"><i
+            class="glyphicon glyphicon-plus"></i> 添加权限</span></span>
 </div>
+<div class="records-container">
 
-<ul class="breadcrumb">
-	<li><a href="/schoolres/index/html">管理后台</a><span class="divider">/</span></li>
-	<li class="active">权限管理</li>
-</ul>
-
-<div class="container-fluid main">
-	<div class="row-fluid">
-		<div class="row-fluid">
-			<div class="block">
-				<p class="block-heading">权限列表</p>
-				<div class="block-body">
-					<p>
-						<a href="/schoolres/privilegeAdd/html" data-toggle="modal" class="btn btn-primary btn-small">添加权限</a>
-					</p>
-					<div class="privi-list"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<footer>
-		<hr>
-		<p class="pull-right">
-			<a href="http://www.gwsoft.com.cn" target="_blank">GWSoft</a>
-		</p>
-		<p>
-			&copy; 2013 <a href="http://www.gwsoft.com.cn" target="_blank">长城软件股份有限公司</a>
-		</p>
-	</footer>
 </div>
-<script src="@{'/public/bootstrap/js/bootstrap.js'}"></script>
-<script src="@{'/public/javascripts/schoolres/privilege.js'}"></script>
-
-</body>
-</html>
-
-
+<script type="text/javascript" src="@{'/public/javascripts/manage/privilege.js'}"></script>

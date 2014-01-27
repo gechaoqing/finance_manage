@@ -1,11 +1,16 @@
 package controllers;
 
+import models.InsuranceAgent;
 import models.ManagerPrivilege;
 import models.ManagerRole;
+import play.db.jpa.Model;
+import utils.JSONBuilder;
 import utils.JsonResponse;
+import utils.Pagination;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 14-1-26.
@@ -48,5 +53,24 @@ public class ManagePrivileges extends Application {
         } catch (Exception e) {
             renderJSON(new JsonResponse(-1, "[" + role.name + "] 权限分配失败。"));
         }
+    }
+    static Map<Object,Object> getPrivileges(Pagination page,int current,String [] key,String [] val){
+        String keys=ManageUtils.genKeys(key,true);
+        Object[] val_=ManageUtils.genVals(val);
+        List<Model> list;
+        int count;
+        if(key==null){
+            count=(int) ManagerPrivilege.count();
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=ManagerPrivilege.findAll();
+        }
+        else{
+            count=(int)ManagerPrivilege.count(keys,val_);
+            page.setTotalRecord(count);
+            page.setCurrentPage(current);
+            list=ManagerPrivilege.find(keys,val_).from(page.getStartRow()).fetch(page.getDisplayCountOfPerPage());
+        }
+        return JSONBuilder.paginationList(page, list);
     }
 }

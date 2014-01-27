@@ -1,5 +1,4 @@
 $(function(){
-	suiteHeight();
 	var cols=[{
 		name:"权限名称",
 		field:"name"
@@ -17,10 +16,10 @@ $(function(){
 		name:"操作",
 		data:[{
 			name:"修改",
-			href:"/schoolres/3/data/{id}"
+			href:"/manage/1006/data/{id}"
 		},{
 			name:"<b>&times;</b> 删除",
-			href:"/schoolres/3/delConfirm/{id}",
+			href:"/manage/1006/delConfirm/{id}",
 			className:"btn-danger"
 		}],
 		type:"operator"
@@ -28,7 +27,7 @@ $(function(){
 	tableData=TableJS.init({
 		titles:cols,
 		container:".records-container",
-		url:"/schoolres/3/data",
+		url:"/manage/1006/data",
 		urlPara:{}
 	});
 });

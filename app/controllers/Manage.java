@@ -18,7 +18,7 @@ public class Manage extends Controller {
 	public static void index(){
         String uid=session.get(LOGIN_USER_ID);
 		if(uid==null){
-            session.put(LOGIN_RESPONSE,"超时!");
+            session.put(LOGIN_RESPONSE,"请登录!");
 			Application.index();
 		}
         Managers manager=Managers.findById(Integer.decode(uid));
@@ -59,6 +59,9 @@ public class Manage extends Controller {
                 break;
             case BUSINESS:
                 renderJSON(ManageBusinesses.getBusiness(page,current,key,value));
+                break;
+            case PRIVILEGE:
+                renderJSON(ManagePrivileges.getPrivileges(page,current,key,value));
                 break;
         }
 	}

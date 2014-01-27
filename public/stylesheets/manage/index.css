@@ -81,6 +81,8 @@
     line-height:17px;
     border:1px solid #ccc;
     border-right: none;
+    font-size: 12px;
+    vertical-align: middle;
 }
 .search-box .input-right{
     border-radius:0 4px 4px 0 ;
@@ -98,4 +100,13 @@
 }
 .main .currentRow{
 	background-color: rgba(231, 232, 239,0.3);
+}
+.icon-rmb:before{
+    content: "¥";
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 20px;
+    display: inline-block;
+    height: 20px;
+    padding: 0 3px;
 }
